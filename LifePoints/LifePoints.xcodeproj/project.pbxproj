@@ -19,6 +19,13 @@
 		A3B47F861ECA6A760067D229 /* CollectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F851ECA6A760067D229 /* CollectViewController.swift */; };
 		A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F871ECA70E10067D229 /* RewardsViewController.swift */; };
 		A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F891ECA82100067D229 /* MyRewardsCell.swift */; };
+		A3B47F8E1ED14FC50067D229 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */; };
+		A3B47F901ED1ECB60067D229 /* AllPartnersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */; };
+		A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */; };
+		A3B47F941ED1F69C0067D229 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */; };
+		A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */; };
+		A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */; };
+		A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +64,13 @@
 		A3B47F851ECA6A760067D229 /* CollectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectViewController.swift; sourceTree = "<group>"; };
 		A3B47F871ECA70E10067D229 /* RewardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
 		A3B47F891ECA82100067D229 /* MyRewardsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRewardsCell.swift; sourceTree = "<group>"; };
+		A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPartnersViewController.swift; sourceTree = "<group>"; };
+		A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPartnersCollectionCell.swift; sourceTree = "<group>"; };
+		A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedStoreViewController.swift; sourceTree = "<group>"; };
+		A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursOfOperationTableViewCell.swift; sourceTree = "<group>"; };
+		A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRewardTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,17 +121,16 @@
 		A3A94ED91ECA30A500CD7097 /* LifePoints */ = {
 			isa = PBXGroup;
 			children = (
+				A3B47F8C1ED14F130067D229 /* Rewards */,
+				A3B47F8B1ED13DC70067D229 /* Storyboard */,
 				A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */,
 				A3A94EDC1ECA30A500CD7097 /* LogInController.swift */,
-				A3A94EDE1ECA30A500CD7097 /* Main.storyboard */,
 				A3A94EE11ECA30A500CD7097 /* Assets.xcassets */,
-				A3A94EE31ECA30A500CD7097 /* LaunchScreen.storyboard */,
 				A3A94EE61ECA30A500CD7097 /* Info.plist */,
 				A3A94F081ECA410000CD7097 /* MainRootController.swift */,
+				A3B47F891ECA82100067D229 /* MyRewardsCell.swift */,
 				A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */,
 				A3B47F851ECA6A760067D229 /* CollectViewController.swift */,
-				A3B47F871ECA70E10067D229 /* RewardsViewController.swift */,
-				A3B47F891ECA82100067D229 /* MyRewardsCell.swift */,
 			);
 			path = LifePoints;
 			sourceTree = "<group>";
@@ -138,6 +151,38 @@
 				A3A94EFC1ECA30A500CD7097 /* Info.plist */,
 			);
 			path = LifePointsUITests;
+			sourceTree = "<group>";
+		};
+		A3B47F8B1ED13DC70067D229 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				A3A94EE31ECA30A500CD7097 /* LaunchScreen.storyboard */,
+				A3A94EDE1ECA30A500CD7097 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		A3B47F8C1ED14F130067D229 /* Rewards */ = {
+			isa = PBXGroup;
+			children = (
+				A3B47F971ED380FD0067D229 /* SelectedStore */,
+				A3B47F871ECA70E10067D229 /* RewardsViewController.swift */,
+				A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */,
+				A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */,
+				A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */,
+				A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */,
+			);
+			name = Rewards;
+			sourceTree = "<group>";
+		};
+		A3B47F971ED380FD0067D229 /* SelectedStore */ = {
+			isa = PBXGroup;
+			children = (
+				A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */,
+				A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */,
+				A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */,
+			);
+			name = SelectedStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,13 +322,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3B47F8E1ED14FC50067D229 /* CategoryCollectionViewCell.swift in Sources */,
+				A3B47F941ED1F69C0067D229 /* HeaderCollectionReusableView.swift in Sources */,
 				A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */,
+				A3B47F901ED1ECB60067D229 /* AllPartnersViewController.swift in Sources */,
 				A3B47F861ECA6A760067D229 /* CollectViewController.swift in Sources */,
 				A3A94F091ECA410000CD7097 /* MainRootController.swift in Sources */,
+				A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */,
 				A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */,
 				A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */,
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
+				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
 				A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */,
+				A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */,
+				A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
