@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		188C2DD9337286C576B8D4F1 /* Pods_LifePointsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */; };
+		A35CCA671EED9A1D0019916B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */; };
+		A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */; };
+		A38D47481EF863DC00B153FF /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */; };
 		A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */; };
 		A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDC1ECA30A500CD7097 /* LogInController.swift */; };
 		A3A94EE01ECA30A500CD7097 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3A94EDE1ECA30A500CD7097 /* Main.storyboard */; };
@@ -15,6 +19,9 @@
 		A3A94EF01ECA30A500CD7097 /* LifePointsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EEF1ECA30A500CD7097 /* LifePointsTests.swift */; };
 		A3A94EFB1ECA30A500CD7097 /* LifePointsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EFA1ECA30A500CD7097 /* LifePointsUITests.swift */; };
 		A3A94F091ECA410000CD7097 /* MainRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94F081ECA410000CD7097 /* MainRootController.swift */; };
+		A3AD81851EDB43B40092A2EE /* firstSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */; };
+		A3AD81871EDB43F30092A2EE /* secondSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */; };
+		A3AD81891EDC96480092A2EE /* ThirdSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */; };
 		A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */; };
 		A3B47F861ECA6A760067D229 /* CollectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F851ECA6A760067D229 /* CollectViewController.swift */; };
 		A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F871ECA70E10067D229 /* RewardsViewController.swift */; };
@@ -26,6 +33,8 @@
 		A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */; };
 		A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */; };
 		A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */; };
+		BBB0DC14FFA0B7CEF7330160 /* Pods_LifePointsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5846F498D4330B7D03924004 /* Pods_LifePointsTests.framework */; };
+		ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +55,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AC46E0B1606A4DFC07686B9 /* Pods-LifePoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LifePoints/Pods-LifePoints.debug.xcconfig"; sourceTree = "<group>"; };
+		4925C97A00517513AD86F476 /* Pods-LifePointsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5846F498D4330B7D03924004 /* Pods_LifePointsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePointsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67DF77DAFC80A37E621AB074 /* Pods-LifePointsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePoints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		784DE62ED0B9BC833DF98AC3 /* Pods-LifePoints.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePoints.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePoints/Pods-LifePoints.release.xcconfig"; sourceTree = "<group>"; };
+		78E823B214E1D97844BA66FF /* Pods-LifePointsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests.release.xcconfig"; sourceTree = "<group>"; };
+		A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePointsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
 		A3A94ED71ECA30A500CD7097 /* LifePoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifePoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3A94EDC1ECA30A500CD7097 /* LogInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
@@ -60,6 +80,9 @@
 		A3A94EFA1ECA30A500CD7097 /* LifePointsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifePointsUITests.swift; sourceTree = "<group>"; };
 		A3A94EFC1ECA30A500CD7097 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A94F081ECA410000CD7097 /* MainRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRootController.swift; sourceTree = "<group>"; };
+		A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstSignUpViewController.swift; sourceTree = "<group>"; };
+		A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secondSignUpViewController.swift; sourceTree = "<group>"; };
+		A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdSignUpViewController.swift; sourceTree = "<group>"; };
 		A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A3B47F851ECA6A760067D229 /* CollectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectViewController.swift; sourceTree = "<group>"; };
 		A3B47F871ECA70E10067D229 /* RewardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +94,7 @@
 		A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedStoreViewController.swift; sourceTree = "<group>"; };
 		A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursOfOperationTableViewCell.swift; sourceTree = "<group>"; };
 		A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRewardTableViewCell.swift; sourceTree = "<group>"; };
+		F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB0DC14FFA0B7CEF7330160 /* Pods_LifePointsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,19 +118,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188C2DD9337286C576B8D4F1 /* Pods_LifePointsUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		56C1BAAD1118FFC4B77D11CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1AC46E0B1606A4DFC07686B9 /* Pods-LifePoints.debug.xcconfig */,
+				784DE62ED0B9BC833DF98AC3 /* Pods-LifePoints.release.xcconfig */,
+				67DF77DAFC80A37E621AB074 /* Pods-LifePointsTests.debug.xcconfig */,
+				78E823B214E1D97844BA66FF /* Pods-LifePointsTests.release.xcconfig */,
+				4925C97A00517513AD86F476 /* Pods-LifePointsUITests.debug.xcconfig */,
+				F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A3A94ECE1ECA30A500CD7097 = {
 			isa = PBXGroup;
 			children = (
+				A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */,
+				A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */,
 				A3A94ED91ECA30A500CD7097 /* LifePoints */,
 				A3A94EEE1ECA30A500CD7097 /* LifePointsTests */,
 				A3A94EF91ECA30A500CD7097 /* LifePointsUITests */,
 				A3A94ED81ECA30A500CD7097 /* Products */,
+				56C1BAAD1118FFC4B77D11CB /* Pods */,
+				B72D2BD7F1534F72EC91FA02 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +168,7 @@
 				A3B47F8C1ED14F130067D229 /* Rewards */,
 				A3B47F8B1ED13DC70067D229 /* Storyboard */,
 				A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */,
+				A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */,
 				A3A94EDC1ECA30A500CD7097 /* LogInController.swift */,
 				A3A94EE11ECA30A500CD7097 /* Assets.xcassets */,
 				A3A94EE61ECA30A500CD7097 /* Info.plist */,
@@ -131,6 +176,9 @@
 				A3B47F891ECA82100067D229 /* MyRewardsCell.swift */,
 				A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */,
 				A3B47F851ECA6A760067D229 /* CollectViewController.swift */,
+				A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */,
+				A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */,
+				A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */,
 			);
 			path = LifePoints;
 			sourceTree = "<group>";
@@ -185,6 +233,16 @@
 			name = SelectedStore;
 			sourceTree = "<group>";
 		};
+		B72D2BD7F1534F72EC91FA02 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */,
+				5846F498D4330B7D03924004 /* Pods_LifePointsTests.framework */,
+				A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,9 +250,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A3A94EFF1ECA30A500CD7097 /* Build configuration list for PBXNativeTarget "LifePoints" */;
 			buildPhases = (
+				6B614EE8413F4A1D6146B275 /* [CP] Check Pods Manifest.lock */,
 				A3A94ED31ECA30A500CD7097 /* Sources */,
 				A3A94ED41ECA30A500CD7097 /* Frameworks */,
 				A3A94ED51ECA30A500CD7097 /* Resources */,
+				B830688BB35C5AB326FB9D46 /* [CP] Embed Pods Frameworks */,
+				4C719417915C2878C5B2ECA3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -209,9 +270,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A3A94F021ECA30A500CD7097 /* Build configuration list for PBXNativeTarget "LifePointsTests" */;
 			buildPhases = (
+				05126E4C474EE9D4422F2FCB /* [CP] Check Pods Manifest.lock */,
 				A3A94EE71ECA30A500CD7097 /* Sources */,
 				A3A94EE81ECA30A500CD7097 /* Frameworks */,
 				A3A94EE91ECA30A500CD7097 /* Resources */,
+				D3F00ECE93606DCCAA10BA4A /* [CP] Embed Pods Frameworks */,
+				736D801542974BBF4025B445 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -227,9 +291,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A3A94F051ECA30A500CD7097 /* Build configuration list for PBXNativeTarget "LifePointsUITests" */;
 			buildPhases = (
+				957E484A5AAEE36B550CA7BA /* [CP] Check Pods Manifest.lock */,
 				A3A94EF21ECA30A500CD7097 /* Sources */,
 				A3A94EF31ECA30A500CD7097 /* Frameworks */,
 				A3A94EF41ECA30A500CD7097 /* Resources */,
+				C9B39166C41F9FD9E317B33A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,6 +361,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A35CCA671EED9A1D0019916B /* GoogleService-Info.plist in Resources */,
+				A38D47481EF863DC00B153FF /* AvenirLTStd-Book.otf in Resources */,
 				A3A94EE51ECA30A500CD7097 /* LaunchScreen.storyboard in Resources */,
 				A3A94EE21ECA30A500CD7097 /* Assets.xcassets in Resources */,
 				A3A94EE01ECA30A500CD7097 /* Main.storyboard in Resources */,
@@ -317,6 +385,129 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05126E4C474EE9D4422F2FCB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4C719417915C2878C5B2ECA3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePoints/Pods-LifePoints-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B614EE8413F4A1D6146B275 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		736D801542974BBF4025B445 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		957E484A5AAEE36B550CA7BA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B830688BB35C5AB326FB9D46 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePoints/Pods-LifePoints-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9B39166C41F9FD9E317B33A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3F00ECE93606DCCAA10BA4A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A3A94ED31ECA30A500CD7097 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -326,13 +517,17 @@
 				A3B47F941ED1F69C0067D229 /* HeaderCollectionReusableView.swift in Sources */,
 				A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */,
 				A3B47F901ED1ECB60067D229 /* AllPartnersViewController.swift in Sources */,
+				A3AD81891EDC96480092A2EE /* ThirdSignUpViewController.swift in Sources */,
 				A3B47F861ECA6A760067D229 /* CollectViewController.swift in Sources */,
 				A3A94F091ECA410000CD7097 /* MainRootController.swift in Sources */,
 				A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */,
+				A3AD81851EDB43B40092A2EE /* firstSignUpViewController.swift in Sources */,
 				A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */,
 				A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */,
+				A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */,
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
 				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
+				A3AD81871EDB43F30092A2EE /* secondSignUpViewController.swift in Sources */,
 				A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */,
 				A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */,
 				A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */,
@@ -485,6 +680,7 @@
 		};
 		A3A94F001ECA30A500CD7097 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AC46E0B1606A4DFC07686B9 /* Pods-LifePoints.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -500,6 +696,7 @@
 		};
 		A3A94F011ECA30A500CD7097 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 784DE62ED0B9BC833DF98AC3 /* Pods-LifePoints.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -515,6 +712,7 @@
 		};
 		A3A94F031ECA30A500CD7097 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67DF77DAFC80A37E621AB074 /* Pods-LifePointsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -530,6 +728,7 @@
 		};
 		A3A94F041ECA30A500CD7097 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78E823B214E1D97844BA66FF /* Pods-LifePointsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -545,6 +744,7 @@
 		};
 		A3A94F061ECA30A500CD7097 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4925C97A00517513AD86F476 /* Pods-LifePointsUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 8YKL2VACPX;
@@ -559,6 +759,7 @@
 		};
 		A3A94F071ECA30A500CD7097 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 8YKL2VACPX;
