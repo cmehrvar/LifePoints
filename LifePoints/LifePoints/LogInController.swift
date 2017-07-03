@@ -16,6 +16,8 @@ import FirebaseAuth
 
 class LogInController: UIViewController, UIGestureRecognizerDelegate {
 
+    
+    @IBOutlet weak var LogInView: UIView!
     @IBOutlet weak var DismissKeyboard: UIView!
     @IBOutlet weak var UsernameView: UIView!
     @IBOutlet weak var PasswordView: UIView!
@@ -60,9 +62,9 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
                         print("logged in")
                         if FBSDKAccessToken.current() != nil {
                             
-                            let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                            let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                             
-                            FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) -> Void in
+                            Auth.auth().signIn(with: credential, completion: { (user, error) -> Void in
                                 
                                 if error == nil {
                                     
@@ -82,8 +84,8 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
                                                         
                                                         if let id = value["id"] as? String {
                                                             
-                                                            FIRDatabase.database().reference().child("facebookUIDs").child(id).setValue(uid)
-                                                            FIRDatabase.database().reference().child("users").child(uid).child("facebookId").setValue(id)
+                                                            Database.database().reference().child("facebookUIDs").child(id).setValue(uid)
+                                                            Database.database().reference().child("users").child(uid).child("facebookId").setValue(id)
                                                             
                                                         }
                                                     }
@@ -186,7 +188,7 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
                                                                 userData["online"] = true
                                                                 userData["lastActive"] = Date().timeIntervalSince1970
                                                                 
-                                                                let ref = FIRDatabase.database().reference()
+                                                                let ref = Database.database().reference()
                                                                 ref.keepSynced(true)
                                                                 
                                                                 ref.child("users").child(uid).setValue(userData)
@@ -244,7 +246,7 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
     
     func checkIfTaken(_ key: String, credential: String, completion: @escaping (_ taken: Bool) -> ()) {
         
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.keepSynced(true)
         
         ref.child(key).child(credential).observeSingleEvent(of: .value, with:  { (snapshot) in
@@ -297,6 +299,13 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
         
         self.UsernameView.layer.cornerRadius = 5
         self.PasswordView.layer.cornerRadius = 5
+        
+        self.LogInView.layer.cornerRadius = 5
+        
+        
+        UsernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        PasswordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+
         
         
     }
@@ -382,6 +391,10 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 

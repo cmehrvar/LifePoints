@@ -14,7 +14,7 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     
     @IBAction func presentAllPartners(_ sender: Any) {
         
-        rewardsViewController?.toggleAllPartners(direction: "up", completion: { (bool) in
+        rewardsViewController?.toggleAllPartners(direction: "open", completion: { (bool) in
             
             print("all partners presented")
             

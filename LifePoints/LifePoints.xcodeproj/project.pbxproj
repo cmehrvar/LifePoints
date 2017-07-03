@@ -34,6 +34,7 @@
 		A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */; };
 		A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */; };
 		BBB0DC14FFA0B7CEF7330160 /* Pods_LifePointsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5846F498D4330B7D03924004 /* Pods_LifePointsTests.framework */; };
+		E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */; };
 		ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedStoreViewController.swift; sourceTree = "<group>"; };
 		A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursOfOperationTableViewCell.swift; sourceTree = "<group>"; };
 		A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRewardTableViewCell.swift; sourceTree = "<group>"; };
+		E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,6 +181,7 @@
 				A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */,
 				A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */,
 				A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */,
+				E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */,
 			);
 			path = LifePoints;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				A3A94EF31ECA30A500CD7097 /* Frameworks */,
 				A3A94EF41ECA30A500CD7097 /* Resources */,
 				C9B39166C41F9FD9E317B33A /* [CP] Copy Pods Resources */,
+				364B6E9D77A1B5A91AA39FFC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -398,7 +402,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		364B6E9D77A1B5A91AA39FFC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C719417915C2878C5B2ECA3 /* [CP] Copy Pods Resources */ = {
@@ -428,7 +447,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		736D801542974BBF4025B445 /* [CP] Copy Pods Resources */ = {
@@ -458,7 +477,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B830688BB35C5AB326FB9D46 /* [CP] Embed Pods Frameworks */ = {
@@ -527,6 +546,7 @@
 				A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */,
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
 				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
+				E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */,
 				A3AD81871EDB43F30092A2EE /* secondSignUpViewController.swift in Sources */,
 				A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */,
 				A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */,
@@ -683,6 +703,7 @@
 			baseConfigurationReference = 1AC46E0B1606A4DFC07686B9 /* Pods-LifePoints.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8YKL2VACPX;
 				INFOPLIST_FILE = LifePoints/Info.plist;
@@ -690,6 +711,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = theBoys.LifePoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -699,6 +721,7 @@
 			baseConfigurationReference = 784DE62ED0B9BC833DF98AC3 /* Pods-LifePoints.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8YKL2VACPX;
 				INFOPLIST_FILE = LifePoints/Info.plist;
@@ -706,6 +729,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = theBoys.LifePoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

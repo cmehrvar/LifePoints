@@ -10,6 +10,7 @@ import UIKit
 
 class RewardsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    weak var mainRoot: MainRootController?
     weak var allPartnersController: AllPartnersViewController?
     
     @IBOutlet weak var allPartnerXConstraint: NSLayoutConstraint!
@@ -89,7 +90,7 @@ class RewardsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         let width = self.view.bounds.width
         
-        if direction == "up" {
+        if direction == "open" {
             
             UIView.animate(withDuration: 0.3, animations: {
                 
@@ -102,7 +103,7 @@ class RewardsViewController: UIViewController, UICollectionViewDataSource, UICol
                 
             })
             
-        } else if direction == "down" {
+        } else if direction == "close" {
             
             UIView.animate(withDuration: 0.3, animations: {
                 

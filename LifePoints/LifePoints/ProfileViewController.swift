@@ -20,9 +20,9 @@ class ProfileViewController: UIViewController {
     
     func loadPage(){
         
-        if let uid = FIRAuth.auth()?.currentUser?.uid {
+        if let uid = Auth.auth().currentUser?.uid {
             
-            let ref = FIRDatabase.database().reference().child("users").child(uid)
+            let ref = Database.database().reference().child("users").child(uid)
             
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 

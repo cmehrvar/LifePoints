@@ -8,11 +8,15 @@
 
 import UIKit
 
-class MainRootController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainRootController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
+    var menuOpen = false
     
     var currentTab = "profile"
     var currentBottomTab = "myRewards"
+    
+    weak var menuController: MenuViewController?
+    weak var rewardsController: RewardsViewController?
     
     @IBOutlet weak var TableViewText: UILabel!
     
@@ -25,20 +29,72 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var profilePageOutlet: UIButton!
     @IBOutlet weak var rewardsPageOutlet: UIButton!
     @IBOutlet weak var collectPageOutlet: UIButton!
-    
-    
-    
-    
-    
+ 
     @IBOutlet weak var myRewardsView: UIView!
     @IBOutlet weak var bottomMyRewards: UIView!
     @IBOutlet weak var myChallengesView: UIView!
     @IBOutlet weak var bottomMyChallenges: UIView!
     @IBOutlet weak var myRewardsOutlet: UIButton!
     @IBOutlet weak var myChallengesOutlet: UIButton!
+    @IBOutlet weak var greyViewOutlet: UIView!
+    @IBOutlet weak var menuContainerLeading: NSLayoutConstraint!
     
     
     
+    @IBAction func menuButton(_ sender: Any) {
+        
+        self.toggleMenu { (bool) in
+            
+            print("menu toggled")
+            
+        }
+    }
+    
+    func closeMenu(){
+        
+        toggleMenu { (bool) in
+            
+            print("menu closed")
+            
+        }
+    }
+    
+    func addCloseMenu(){
+        
+        let closeMenuTapGesture = UITapGestureRecognizer(target: self, action: #selector(closeMenu))
+        closeMenuTapGesture.delegate = self
+        greyViewOutlet.addGestureRecognizer(closeMenuTapGesture)
+        
+        
+    }
+    
+    
+    func toggleMenu(completion: @escaping (Bool) -> ()){
+        
+        var const: CGFloat = 0
+        var alpha: CGFloat = 1
+        
+        if menuOpen {
+            
+            const = -(self.view.bounds.width)*0.8
+            alpha = 0
+            
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.greyViewOutlet.alpha = alpha
+            self.menuContainerLeading.constant = const
+            self.view.layoutIfNeeded()
+            
+        }) { (bool) in
+            
+            self.menuOpen = !self.menuOpen
+            completion(bool)
+            
+        }
+        
+    }
     
     
     
@@ -85,6 +141,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             self.ProfileXConstraint.constant = 0
             self.RewardsXConstraint.constant = screenWidth
             
+            
             self.profilePageOutlet.setImage(UIImage(named: "profileSelected"), for: .normal)
             self.collectPageOutlet.setImage(UIImage(named: "collectUnselected"), for: .normal)
             self.rewardsPageOutlet.setImage(UIImage(named: "rewardsUnselected"), for: .normal)
@@ -129,23 +186,39 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         
         print(currentTab)
         
-        UIView.animate(withDuration: 0.3, animations: {
+        if self.currentTab != "rewards" {
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.RewardsXConstraint.constant = 0
+                self.rewardsController?.toggleAllPartners(direction: "close", completion: { (bool) in
+                    
+                    print("all partners closed")
+                    
+                })
+                
+                self.rewardsController?.allPartnersController?.toggleSelectedStore(action: "close", completion: { (bool) in
+                    
+                    print("selected store closed")
+                    
+                })
+                
+                self.profilePageOutlet.setImage(UIImage(named: "profileUnselected"), for: .normal)
+                self.collectPageOutlet.setImage(UIImage(named: "collectUnselected"), for: .normal)
+                self.rewardsPageOutlet.setImage(UIImage(named: "rewardsSelected"), for: .normal)
+                
+                self.view.layoutIfNeeded()
+                
+            }) { (bool) in
+                
+                self.currentTab = "rewards"
+                
+            }
 
-        self.RewardsXConstraint.constant = 0
-            
-            
-            self.profilePageOutlet.setImage(UIImage(named: "profileUnselected"), for: .normal)
-            self.collectPageOutlet.setImage(UIImage(named: "collectUnselected"), for: .normal)
-            self.rewardsPageOutlet.setImage(UIImage(named: "rewardsSelected"), for: .normal)
-        
-        self.view.layoutIfNeeded()
-            
-        }) { (bool) in
-            
-            self.currentTab = "rewards"
             
         }
-    }
+        
+            }
     
     
     @IBAction func myRewards(_ sender: Any) {
@@ -195,6 +268,8 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addCloseMenu()
 
         let width = self.view.bounds.width
         self.RewardsXConstraint.constant = width
@@ -232,15 +307,33 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         )
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
-    /*
+    
+
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "menuSegue" {
+            
+            let menu = segue.destination as? MenuViewController
+            menuController = menu
+            menuController?.mainRoot = self
+            
+        } else if segue.identifier == "rewardsSegue" {
+            
+            let rewards = segue.destination as? RewardsViewController
+            rewardsController = rewards
+            rewardsController?.mainRoot = self
+            
+            
+        }
     }
-    */
-
 }

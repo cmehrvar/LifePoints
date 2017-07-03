@@ -8,13 +8,24 @@
 
 import UIKit
 
-class secondSignUpViewController: UIViewController {
+class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var ageView: UIView!
     @IBOutlet weak var thirdSignUpConst: NSLayoutConstraint!
     
 
     weak var thirdSignUp: ThirdSignUpViewController?
     weak var firstSignUp: firstSignUpViewController?
+    
+    @IBOutlet weak var firstNameViewOutlet: UIView!
+    @IBOutlet weak var lastNameViewOutlet: UIView!
+    @IBOutlet weak var emailViewOutlet: UIView!
+    @IBOutlet weak var firstNameTextOutlet: UITextField!
+    @IBOutlet weak var lastNameTextOutlet: UITextField!
+    @IBOutlet weak var emailTextOutlet: UITextField!
+    @IBOutlet weak var dismissKeyboardView: UIView!
+    
+    
+    
     
     @IBAction func next(_ sender: Any) {
         
@@ -60,15 +71,46 @@ class secondSignUpViewController: UIViewController {
         }
     }
     
+    func closeKeyboard(){
+        
+        self.view.endEditing(true)
+        
+    }
     
     
     @IBAction func signIn(_ sender: Any) {
     }
     
+    func keyboardDidShow(){
+        
+        self.dismissKeyboardView.alpha = 1
+        
+    }
+    
+    func keyboardDidHide(){
+        
+        self.dismissKeyboardView.alpha = 0
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        tapGestureRecognizer.delegate = self
+        self.dismissKeyboardView.addGestureRecognizer(tapGestureRecognizer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
 
         ageView.layer.cornerRadius = 5
+        firstNameViewOutlet.layer.cornerRadius = 5
+        lastNameViewOutlet.layer.cornerRadius = 5
+        emailViewOutlet.layer.cornerRadius = 5
+        
+        firstNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        lastNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        emailTextOutlet.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
         // Do any additional setup after loading the view.
     }

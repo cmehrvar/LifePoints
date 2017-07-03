@@ -8,13 +8,21 @@
 
 import UIKit
 
-class firstSignUpViewController: UIViewController {
+class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate {
 
     weak var signUpController: SignUpViewController?
     weak var secondSignUp: secondSignUpViewController?
     
     
     @IBOutlet weak var secondSignUpConst: NSLayoutConstraint!
+    @IBOutlet weak var usernameOutlet: UIView!
+    @IBOutlet weak var passwordOutlet: UIView!
+    @IBOutlet weak var retypePasswordOutlet: UIView!
+    @IBOutlet weak var usernameTextOutlet: UITextField!
+    @IBOutlet weak var passwordTextOutlet: UITextField!
+    @IBOutlet weak var retypePasswordText: UITextField!
+    @IBOutlet weak var dismissKeyboard: UIView!
+    
     
     
     @IBAction func next(_ sender: Any) {
@@ -60,9 +68,42 @@ class firstSignUpViewController: UIViewController {
         }
     }
     
+    func keyboardDidShow(){
+        
+        self.dismissKeyboard.alpha = 1
+        
+    }
+    
+    func keyboardDidHide(){
+        
+        self.dismissKeyboard.alpha = 0
+        
+    }
+    
+    func closeKeyboard(){
+        
+        self.view.endEditing(true)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        tapGestureRecognizer.delegate = self
+        self.dismissKeyboard.addGestureRecognizer(tapGestureRecognizer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        
+        usernameOutlet.layer.cornerRadius = 5
+        passwordOutlet.layer.cornerRadius = 5
+        retypePasswordOutlet.layer.cornerRadius = 5
+        
+        usernameTextOutlet.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        passwordTextOutlet.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        retypePasswordText.attributedPlaceholder = NSAttributedString(string: "Re-Type Password", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        
 
         // Do any additional setup after loading the view.
     }
