@@ -4,7 +4,7 @@
 //
 //  Created by Cina Mehrvar on 2017-05-15.
 //  Copyright © 2017 Cina Mehrvar. All rights reserved.
-//
+//A29DCB
 
 import UIKit
 import Firebase
@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController {
         loadPage()
         
         self.profileImage.layer.cornerRadius = 45
-        self.profileImage.layer.borderColor = UIColor.darkGray.cgColor
+        self.profileImage.layer.borderColor = hexStringToUIColor(hex: "A29DCB").cgColor
         self.profileImage.layer.borderWidth = 2
 
         // Do any additional setup after loading the view.
@@ -73,5 +73,32 @@ class ProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.characters.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
 
 }

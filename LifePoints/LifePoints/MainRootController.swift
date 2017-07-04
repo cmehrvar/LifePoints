@@ -118,7 +118,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             
         } else {
             
-            self.TableViewText.text = "Challenges are gien out on a weekly basis and expire at the end of the week, so make sure to get them done in time!"
+            self.TableViewText.text = "Challenges are given out on a weekly basis and expire at the end of the week, so make sure to get them done in time!"
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "myChallenges", for: indexPath) as! MyRewardsCell
             
@@ -185,9 +185,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func rewardsSelect(_ sender: Any) {
         
         print(currentTab)
-        
-        if self.currentTab != "rewards" {
-            
+
             UIView.animate(withDuration: 0.3, animations: {
                 
                 self.RewardsXConstraint.constant = 0
@@ -214,11 +212,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                 self.currentTab = "rewards"
                 
             }
-
-            
-        }
-        
-            }
+    }
     
     
     @IBAction func myRewards(_ sender: Any) {

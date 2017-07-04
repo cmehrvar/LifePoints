@@ -11,7 +11,9 @@ import UIKit
 class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     weak var signUpTwo: secondSignUpViewController?
+    @IBOutlet weak var gymCollectionViewOutlet: UICollectionView!
     
+    var selectedGymIndex: Int?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -21,7 +23,25 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "gymCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "gymCell", for: indexPath) as! SelectGymCollectionViewCell
+        
+        cell.index = indexPath.row
+        cell.signUpController = self
+        
+        if let index = selectedGymIndex {
+            
+            if indexPath.row == index {
+                
+                cell.selectedBox.image = UIImage(named:"checkedBox")
+                
+            } else {
+                
+                cell.selectedBox.image = UIImage(named:"uncheckedBox")
+                
+            }
+            
+        }
+        
         return cell
         
     }

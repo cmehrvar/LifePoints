@@ -7,9 +7,17 @@
 //
 
 import UIKit
+import DownPicker
 
 class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate {
+    
     @IBOutlet weak var ageView: UIView!
+    @IBOutlet weak var sexView: UIView!
+    @IBOutlet weak var maleView: UIView!
+    @IBOutlet weak var femaleView: UIView!
+    @IBOutlet weak var ageDownPicker: UIDownPicker!
+    
+    
     @IBOutlet weak var thirdSignUpConst: NSLayoutConstraint!
     
 
@@ -25,6 +33,23 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     @IBOutlet weak var dismissKeyboardView: UIView!
     
     
+    func addDownPickerData(){
+        
+        var data = [String]()
+        
+        for i in 12...99 {
+            
+            data.append(String(i))
+            
+        }
+        
+        ageDownPicker.downPicker = DownPicker(textField: ageDownPicker, withData: data)
+        
+        ageDownPicker.downPicker.setAttributedPlaceholder(NSAttributedString(string: "Select", attributes: [NSForegroundColorAttributeName: UIColor.lightGray]))
+        
+        
+        
+    }
     
     
     @IBAction func next(_ sender: Any) {
@@ -79,6 +104,8 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     
     
     @IBAction func signIn(_ sender: Any) {
+        
+        
     }
     
     func keyboardDidShow(){
@@ -93,17 +120,53 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
         
     }
     
+    func selectMale(){
+        
+        maleView.backgroundColor = hexStringToUIColor(hex: "4C4BD4")
+        femaleView.backgroundColor = UIColor.clear
+        
+    }
+    
+    func selectFemale(){
+        
+        maleView.backgroundColor = UIColor.clear
+        femaleView.backgroundColor = hexStringToUIColor(hex: "4C4BD4")
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(true)
+        
+        addDownPickerData()
+        
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let closeKeyboardGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        closeKeyboardGestureRecognizer.delegate = self
+        self.dismissKeyboardView.addGestureRecognizer(closeKeyboardGestureRecognizer)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        tapGestureRecognizer.delegate = self
-        self.dismissKeyboardView.addGestureRecognizer(tapGestureRecognizer)
+        let maleGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectMale))
+        maleGestureRecognizer.delegate = self
+        maleView.addGestureRecognizer(maleGestureRecognizer)
+        
+        let femaleGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectFemale))
+        femaleGestureRecognizer.delegate = self
+        femaleView.addGestureRecognizer(femaleGestureRecognizer)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
 
         ageView.layer.cornerRadius = 5
+        sexView.layer.cornerRadius = 5
+        
+        maleView.layer.cornerRadius = 5
+        femaleView.layer.cornerRadius = 5
+        
         firstNameViewOutlet.layer.cornerRadius = 5
         lastNameViewOutlet.layer.cornerRadius = 5
         emailViewOutlet.layer.cornerRadius = 5
@@ -139,6 +202,29 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
         }
         
     }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.characters.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+
     
 
 }

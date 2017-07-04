@@ -35,6 +35,8 @@
 		A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */; };
 		BBB0DC14FFA0B7CEF7330160 /* Pods_LifePointsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5846F498D4330B7D03924004 /* Pods_LifePointsTests.framework */; };
 		E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */; };
+		E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */; };
+		E77B23BC1F0B20EE00A7D95C /* EUROSTIB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */; };
 		ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursOfOperationTableViewCell.swift; sourceTree = "<group>"; };
 		A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRewardTableViewCell.swift; sourceTree = "<group>"; };
 		E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectGymCollectionViewCell.swift; sourceTree = "<group>"; };
+		E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EUROSTIB.ttf; sourceTree = "<group>"; };
 		F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */,
+				E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */,
 				A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */,
 				A3A94ED91ECA30A500CD7097 /* LifePoints */,
 				A3A94EEE1ECA30A500CD7097 /* LifePointsTests */,
@@ -167,10 +172,10 @@
 		A3A94ED91ECA30A500CD7097 /* LifePoints */ = {
 			isa = PBXGroup;
 			children = (
+				E77B23B71F0B11E100A7D95C /* SignUp */,
 				A3B47F8C1ED14F130067D229 /* Rewards */,
 				A3B47F8B1ED13DC70067D229 /* Storyboard */,
 				A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */,
-				A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */,
 				A3A94EDC1ECA30A500CD7097 /* LogInController.swift */,
 				A3A94EE11ECA30A500CD7097 /* Assets.xcassets */,
 				A3A94EE61ECA30A500CD7097 /* Info.plist */,
@@ -178,9 +183,6 @@
 				A3B47F891ECA82100067D229 /* MyRewardsCell.swift */,
 				A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */,
 				A3B47F851ECA6A760067D229 /* CollectViewController.swift */,
-				A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */,
-				A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */,
-				A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */,
 				E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */,
 			);
 			path = LifePoints;
@@ -244,6 +246,26 @@
 				A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E77B23B71F0B11E100A7D95C /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E77B23B81F0B11F200A7D95C /* Cells */,
+				A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */,
+				A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */,
+				A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */,
+				A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */,
+			);
+			name = SignUp;
+			sourceTree = "<group>";
+		};
+		E77B23B81F0B11F200A7D95C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,6 +392,7 @@
 				A3A94EE51ECA30A500CD7097 /* LaunchScreen.storyboard in Resources */,
 				A3A94EE21ECA30A500CD7097 /* Assets.xcassets in Resources */,
 				A3A94EE01ECA30A500CD7097 /* Main.storyboard in Resources */,
+				E77B23BC1F0B20EE00A7D95C /* EUROSTIB.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +567,7 @@
 				A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */,
 				A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */,
 				A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */,
+				E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */,
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
 				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
 				E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */,

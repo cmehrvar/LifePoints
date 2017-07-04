@@ -19,7 +19,7 @@ class AllPartnersViewController: UIViewController, UICollectionViewDelegateFlowL
     
     @IBAction func backButton(_ sender: Any) {
         
-        rewardsController?.toggleAllPartners(direction: "down", completion: { (bool) in
+        rewardsController?.toggleAllPartners(direction: "close", completion: { (bool) in
             
             print("all partners closed")
             
