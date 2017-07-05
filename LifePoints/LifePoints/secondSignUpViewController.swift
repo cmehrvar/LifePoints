@@ -26,10 +26,8 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBOutlet weak var firstNameViewOutlet: UIView!
     @IBOutlet weak var lastNameViewOutlet: UIView!
-    @IBOutlet weak var emailViewOutlet: UIView!
     @IBOutlet weak var firstNameTextOutlet: UITextField!
     @IBOutlet weak var lastNameTextOutlet: UITextField!
-    @IBOutlet weak var emailTextOutlet: UITextField!
     @IBOutlet weak var dismissKeyboardView: UIView!
     
     
@@ -169,11 +167,10 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
         
         firstNameViewOutlet.layer.cornerRadius = 5
         lastNameViewOutlet.layer.cornerRadius = 5
-        emailViewOutlet.layer.cornerRadius = 5
         
         firstNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         lastNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-        emailTextOutlet.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+       
         
         // Do any additional setup after loading the view.
     }

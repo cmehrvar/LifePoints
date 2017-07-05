@@ -25,7 +25,7 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var PasswordTextField: UITextField!
     @IBOutlet weak var signInXConstrain: NSLayoutConstraint!
     
-    weak var signUpController: SignUpViewController?
+    weak var firstSignUp: firstSignUpViewController?
     
     @IBAction func facebookLogIn(_ sender: Any) {
         
@@ -244,6 +244,110 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
+    @IBAction func usernameLogIn(_ sender: Any) {
+        
+        if let email = UsernameTextField.text, let password = PasswordTextField.text {
+            
+            let alertController = NYAlertViewController()
+            
+            alertController.backgroundTapDismissalGestureEnabled = true
+            
+            alertController.title = nil
+            
+            
+            alertController.messageColor = UIColor.darkGray
+            
+            alertController.buttonColor = UIColor.red
+            alertController.buttonTitleColor = UIColor.white
+            
+            alertController.cancelButtonTitleColor = UIColor.white
+            alertController.cancelButtonColor = UIColor.lightGray
+            
+            alertController.addAction(NYAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }))
+            
+            alertController.addAction(NYAlertAction(title: "Ok", style: .default, handler: { (action) in
+                
+                self.dismiss(animated: true, completion: {
+                    
+                    
+                    
+                })
+            }))
+            
+            //Add condition to find valid e-mail
+            
+            if email == ""  {
+                
+                print("no email")
+                alertController.message = "Please enter a valid e-mail."
+                self.present(alertController, animated: true, completion: nil)
+                
+            } else if password == "" {
+                
+                print("no password")
+                alertController.message = "Please enter a valid password."
+                self.present(alertController, animated: true, completion: nil)
+                
+            } else if password.characters.count < 6 {
+                
+                print("password less than 6 characters")
+                alertController.message = "Please enter a password with minimum 6 characters."
+                self.present(alertController, animated: true, completion: nil)
+                
+                
+            } else {
+                
+                Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+
+                    if error == nil {
+                        
+                        
+    
+                    } else {
+
+                        print(error?.localizedDescription)
+                        
+                        if error?.localizedDescription == "There is no user record corresponding to this identifier. The user may have been deleted." {
+                            
+                            alertController.message = "\(email) could not be found as a registered e-mail. Please try again."
+                            self.present(alertController, animated: true, completion: nil)
+                            
+                        }
+                        
+                        
+                        if error?.localizedDescription == "The email address is badly formatted." {
+                            
+                            alertController.message = "Please enter a valid e-mail"
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+ 
+                        
+                    }
+                    
+                    
+                })
+                
+            }
+            
+            
+            
+            
+        } else {
+            
+            print("no username, no password")
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
     func checkIfTaken(_ key: String, credential: String, completion: @escaping (_ taken: Bool) -> ()) {
         
         let ref = Database.database().reference()
@@ -303,8 +407,8 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
         self.LogInView.layer.cornerRadius = 5
         
         
-        UsernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-        PasswordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        UsernameTextField.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        PasswordTextField.attributedPlaceholder = NSAttributedString(string: "Password (min 6 characters)", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
 
         
         
@@ -378,11 +482,11 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
         
-        if segue.identifier == "signUpSegue" {
+        if segue.identifier == "SignUpOne" {
             
-            let signUp = segue.destination as? SignUpViewController
-            signUpController = signUp
-            signUpController?.logInController = self
+            let signUp = segue.destination as? firstSignUpViewController
+            firstSignUp = signUp
+            firstSignUp?.logIn = self
             
         }
      }

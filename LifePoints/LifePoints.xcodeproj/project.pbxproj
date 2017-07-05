@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		188C2DD9337286C576B8D4F1 /* Pods_LifePointsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */; };
 		A35CCA671EED9A1D0019916B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */; };
-		A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */; };
 		A38D47481EF863DC00B153FF /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */; };
 		A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */; };
 		A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDC1ECA30A500CD7097 /* LogInController.swift */; };
@@ -67,7 +66,6 @@
 		78E823B214E1D97844BA66FF /* Pods-LifePointsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests.release.xcconfig"; sourceTree = "<group>"; };
 		A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePointsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
 		A3A94ED71ECA30A500CD7097 /* LifePoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifePoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -252,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				E77B23B81F0B11F200A7D95C /* Cells */,
-				A36A28F61EDA35B5009F0B53 /* SignUpViewController.swift */,
 				A3AD81841EDB43B40092A2EE /* firstSignUpViewController.swift */,
 				A3AD81861EDB43F30092A2EE /* secondSignUpViewController.swift */,
 				A3AD81881EDC96480092A2EE /* ThirdSignUpViewController.swift */,
@@ -566,7 +563,6 @@
 				A3AD81851EDB43B40092A2EE /* firstSignUpViewController.swift in Sources */,
 				A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */,
 				A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */,
-				A36A28F71EDA35B5009F0B53 /* SignUpViewController.swift in Sources */,
 				E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */,
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
 				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
