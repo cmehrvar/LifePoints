@@ -29,6 +29,9 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
     @IBOutlet weak var passwordChecker: UIImageView!
     @IBOutlet weak var retypePasswordChecker: UIImageView!
     
+    @IBOutlet weak var nextButtonOutlet: UIButton!
+    
+    
     
     var emailValid: Bool = false
     var passwordValid: Bool = false
@@ -73,8 +76,6 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
                         
                         alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
                             
-                            self.usernameTextOutlet.becomeFirstResponder()
-                            
                             
                         }))
                         
@@ -96,11 +97,9 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
                 
                 emailChecker.image = UIImage(named: "RedX")
                 
-                let alertController = UIAlertController(title: "Hey", message: "Please Enter a Valid Email", preferredStyle:  UIAlertControllerStyle.alert)
+                let alertController = UIAlertController(title: "Invalid E-mail", message: "Please Enter a Valid Email", preferredStyle:  UIAlertControllerStyle.alert)
                 
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
-                    
-                    self.usernameTextOutlet.becomeFirstResponder()
                     
                     
                 }))
@@ -114,6 +113,7 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
             }
         }
     }
+    
     func isValidEmail(testStr: String) -> Bool {
         
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
@@ -138,11 +138,10 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
                 
                 passwordChecker.image = UIImage(named: "RedX")
                 
-                let alertController = UIAlertController(title: "Hey", message: "Password must be at least 6 characters", preferredStyle:  UIAlertControllerStyle.alert)
+                let alertController = UIAlertController(title: "Password too short", message: "Password must be at least 6 characters", preferredStyle:  UIAlertControllerStyle.alert)
                 
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
-                    
-                    self.passwordTextOutlet.becomeFirstResponder()
+
                     
                     
                 }))
@@ -153,10 +152,33 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
                 
             } else {
                 
-                passwordValid = true
-                
-                passwordChecker.image = UIImage(named: "Checkmark")
-                
+                if retypePasswordText.text == "" {
+                    
+                    passwordValid = true
+                    
+                    passwordChecker.image = UIImage(named: "Checkmark")
+                    
+                } else if retypePasswordText.text == passwordTextOutlet.text {
+                    
+                    retypeValid = true
+                    retypePasswordChecker.image = UIImage(named: "Checkmark")
+                    
+                    
+                } else {
+                    
+                    retypeValid = false
+                    retypePasswordChecker.image = UIImage(named: "RedX")
+                    
+                    let alertController = UIAlertController(title: "Passwords do not match", message: "Please try again.", preferredStyle:  UIAlertControllerStyle.alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
+                        
+                        
+                    }))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+
+                }
             }
         }
     }
@@ -192,6 +214,7 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
         
     }
     
+
     //Text Field Calls
     func textFieldDidEndEditing(_ textField: UITextField) {
         
@@ -199,6 +222,8 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
         if textField == passwordTextOutlet {
             
             checkPasswordValid(textField: textField)
+            
+            
             
         }
         
@@ -229,8 +254,6 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
                     
                     alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
                         
-                        self.retypePasswordText.becomeFirstResponder()
-                        
                         
                     }))
                     
@@ -241,6 +264,16 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
             }
             
         }
+        
+        if passwordValid && retypeValid && emailValid {
+            
+            nextButtonOutlet.isEnabled = true
+            
+        } else {
+            
+            nextButtonOutlet.isEnabled = false
+            
+        }
 
         
     }
@@ -249,25 +282,7 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
     {
         
         
-        if textField == retypePasswordText {
-            
-            if passwordValid {
-                
-                if passwordTextOutlet.text == retypePasswordText.text {
-                    
-                    retypeValid = true
-                    retypePasswordChecker.image = UIImage(named: "Checkmark")
-                    
-                } else {
-                    
-                    retypeValid = false
-                    retypePasswordChecker.image = UIImage(named: "RedX")
-                    
-                }
-                
-            }
-            
-        }
+        
         
         if textField == passwordTextOutlet {
             
@@ -321,13 +336,22 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
             
         }
         
+        if passwordValid && emailValid && retypeValid {
+            
+            nextButtonOutlet.isEnabled = true
+            
+        } else {
+            
+            nextButtonOutlet.isEnabled = false
+            
+        }
+        
         
         
                     return true
         
     }
 
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         view.endEditing(true)
@@ -343,8 +367,6 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
         
     }
 
-    
-    
     func toggleSignUpTwo(direction: String, completion: @escaping (Bool) -> ()) {
         
         var const: CGFloat = 0
@@ -404,6 +426,11 @@ class firstSignUpViewController: UIViewController, UIGestureRecognizerDelegate, 
         usernameTextOutlet.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         passwordTextOutlet.attributedPlaceholder = NSAttributedString(string: "Password (min 6 characters)", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         retypePasswordText.attributedPlaceholder = NSAttributedString(string: "Re-Type Password", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        
+        nextButtonOutlet.isEnabled = false
+        
+        nextButtonOutlet.setTitleColor(UIColor.lightGray, for: .disabled)
+        nextButtonOutlet.setTitleColor(UIColor.white, for: .normal)
         
 
         // Do any additional setup after loading the view.

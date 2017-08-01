@@ -36,6 +36,7 @@
 		E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */; };
 		E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */; };
 		E77B23BC1F0B20EE00A7D95C /* EUROSTIB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */; };
+		E77B23BE1F10196700A7D95C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23BD1F10196700A7D95C /* InitialViewController.swift */; };
 		ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectGymCollectionViewCell.swift; sourceTree = "<group>"; };
 		E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EUROSTIB.ttf; sourceTree = "<group>"; };
+		E77B23BD1F10196700A7D95C /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 				A3B47F831ECA6A6B0067D229 /* ProfileViewController.swift */,
 				A3B47F851ECA6A760067D229 /* CollectViewController.swift */,
 				E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */,
+				E77B23BD1F10196700A7D95C /* InitialViewController.swift */,
 			);
 			path = LifePoints;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */,
 				A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */,
 				E77B23B61F0AD6B400A7D95C /* MenuViewController.swift in Sources */,
+				E77B23BE1F10196700A7D95C /* InitialViewController.swift in Sources */,
 				A3AD81871EDB43F30092A2EE /* secondSignUpViewController.swift in Sources */,
 				A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */,
 				A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */,

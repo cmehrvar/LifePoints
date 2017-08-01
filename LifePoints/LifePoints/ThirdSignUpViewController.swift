@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -15,6 +16,88 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var selectedGymIndex: Int?
     
+    
+    @IBAction func finish(_ sender: Any) {
+        
+        if selectedGymIndex == nil {
+            
+            let alertController = UIAlertController(title: "No Gym Selected", message: "Please select your gym to sign up!", preferredStyle:  UIAlertControllerStyle.alert)
+            
+            alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
+                
+                
+            }))
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+        } else {
+            
+            //Sign Up
+            if let email = signUpTwo?.firstSignUp?.usernameTextOutlet.text, let password = signUpTwo?.firstSignUp?.passwordTextOutlet.text, let firstName = signUpTwo?.firstNameTextOutlet.text, let lastName = signUpTwo?.lastNameTextOutlet.text, let sex = signUpTwo?.sex, let age = signUpTwo?.ageDownPicker.text {
+                
+                Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
+                    
+                    if error == nil {
+                        
+                        var userData = [AnyHashable: Any]()
+     
+                        
+                        userData["age"] = age
+
+                            userData["email"] = email
+
+
+                            userData["gender"] = sex
+
+                        
+         
+                            userData["firstName"] = firstName
+           
+     
+                            userData["lastName"] = lastName
+                        
+                        userData["gym"] = "someGym\(self.selectedGymIndex)"
+                        userData["points"] = 0
+
+                        
+                        
+                        userData["uid"] = user?.uid
+                        userData["online"] = true
+                        userData["lastActive"] = Date().timeIntervalSince1970
+                        
+                        let ref = Database.database().reference()
+                        ref.keepSynced(true)
+                        
+                        if let uid = user?.uid {
+                            
+                            ref.child("users").child(uid).setValue(userData)
+                            
+                        }
+                        
+                        
+                        
+                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as?  MainRootController {
+                            
+                            self.present(vc, animated: true, completion: {
+                                
+                            })
+                        }
+
+                    } else {
+                        
+                        print(error)
+                        
+                    }
+                    
+                })
+
+                
+                
+            }
+        }
+    }
+    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 10

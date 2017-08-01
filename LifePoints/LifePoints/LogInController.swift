@@ -187,6 +187,7 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
                                                                 userData["uid"] = uid
                                                                 userData["online"] = true
                                                                 userData["lastActive"] = Date().timeIntervalSince1970
+                                                                userData["points"] = 0
                                                                 
                                                                 let ref = Database.database().reference()
                                                                 ref.keepSynced(true)
@@ -305,15 +306,29 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
 
                     if error == nil {
                         
-                        
+                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as? MainRootController {
+                            
+                            self.present(vc, animated: true, completion: {
+                                
+                                
+                            })
+                            
+                        }
+
     
                     } else {
 
                         print(error?.localizedDescription)
                         
+                        if error?.localizedDescription == "The password is invalid or the user does not have a password." {
+                            
+                            alertController.message = "The password entered is incorrect. Please try again."
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                        
                         if error?.localizedDescription == "There is no user record corresponding to this identifier. The user may have been deleted." {
                             
-                            alertController.message = "\(email) could not be found as a registered e-mail. Please try again."
+                            alertController.message = "\(email) could not be found as a registered e-mail. Please try again or reset password."
                             self.present(alertController, animated: true, completion: nil)
                             
                         }

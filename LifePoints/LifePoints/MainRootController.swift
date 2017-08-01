@@ -7,16 +7,27 @@
 //
 
 import UIKit
+import Firebase
+import CoreLocation
 
-class MainRootController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class MainRootController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    var globLocation: CLLocation!
+    
+    var locUpdatetimer = Timer()
+    var checkRangeTimer = Timer()
+    
     var menuOpen = false
+    
+    var firstLocationUpload = false
     
     var currentTab = "profile"
     var currentBottomTab = "myRewards"
     
     weak var menuController: MenuViewController?
     weak var rewardsController: RewardsViewController?
+    weak var collectController: CollectViewController?
     
     @IBOutlet weak var TableViewText: UILabel!
     
@@ -39,16 +50,29 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var greyViewOutlet: UIView!
     @IBOutlet weak var menuContainerLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var pointsOutlet: UILabel!
     
     
-    @IBAction func menuButton(_ sender: Any) {
-        
-        self.toggleMenu { (bool) in
+    func addListeners(){
+
+        if let uid = Auth.auth().currentUser?.uid {
             
-            print("menu toggled")
+            let pointsRef = Database.database().reference().child("users").child(uid).child("points")
+            
+            pointsRef.observe(.value, with: { (snapshot) in
+                
+                if let value = snapshot.value as? Int {
+                    
+                    self.pointsOutlet.text = String(value)
+                    
+                }
+            })
+            
+            
             
         }
     }
+    
     
     func closeMenu(){
         
@@ -97,7 +121,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    
+    //Table View Delegates
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 10
@@ -128,6 +152,17 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
     
+    
+    //Actions
+    @IBAction func menuButton(_ sender: Any) {
+        
+        self.toggleMenu { (bool) in
+            
+            print("menu toggled")
+            
+        }
+    }
+
     
     
     @IBAction func profileSelect(_ sender: Any) {
@@ -259,11 +294,194 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         self.myTableView.reloadData()
     }
     
+    //Location Manager Delegates
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if let lastLocation = locations.last {
+            
+            globLocation = lastLocation
+            
+            if firstLocationUpload == false {
+                
+                firstLocationUpload = true
+                updateLocationToFirebase()
+                
+            }
+            
+        }
+    }
     
+    //Functions
+    func beginCheckingInRange(){
+        
+        self.locUpdatetimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(checkIfInRange), userInfo: nil, repeats: true)
+
+    }
+    
+    
+    func checkIfInRange(){
+        
+        if let uid = Auth.auth().currentUser?.uid {
+
+            let latRef = Database.database().reference().child("users").child(uid).child("myGymLatitude")
+            
+            latRef.observe(.value, with: { (latitudeSnapshot) in
+                
+                let longRef = Database.database().reference().child("users").child(uid).child("myGymLongitude")
+                longRef.keepSynced(true)
+                
+                longRef.observeSingleEvent(of: .value, with: { (longitudeSnapshot) in
+                    
+                    if let gymLatitude = latitudeSnapshot.value as? CLLocationDegrees, let gymLongitude = longitudeSnapshot.value as? CLLocationDegrees {
+                        
+                        let gymCoordinate = CLLocation(latitude: gymLatitude, longitude: gymLongitude)
+                        
+                        let distance = self.globLocation.distance(from: gymCoordinate)
+                        
+                        
+                        if distance < 200 {
+
+                            self.collectController?.collectButtonOutlet.isEnabled = true
+                            self.collectController?.inRangeImage.image = UIImage(named: "inRange")
+                            
+
+                        } else {
+
+                            self.collectController?.collectButtonOutlet.isEnabled = false
+                            self.collectController?.lpCollectNumberView.alpha = 0
+                            self.collectController?.collectButtonOutlet.alpha = 1
+                            self.collectController?.inRangeImage.image = UIImage(named: "outOfRange")
+                            self.collectController?.beginCollectingTimer.invalidate()
+
+                        }
+                    }
+                })
+            })
+        }
+    }
+    
+
+    func updateLocationToFirebase(){
+        
+        guard let scopeLocation = globLocation else {return}
+        
+        let geoCoder = CLGeocoder()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            let userRef = Database.database().reference().child("users").child(uid)
+            
+            userRef.updateChildValues(["latitude" : scopeLocation.coordinate.latitude, "longitude" : scopeLocation.coordinate.longitude])
+            
+            geoCoder.reverseGeocodeLocation(scopeLocation) { (placemark, error) in
+                
+                if error == nil {
+                    
+                    if let place = placemark?[0] {
+                        
+                        if let city = place.locality  {
+                            
+                            let replacedCity = city.replacingOccurrences(of: ".", with: "")
+                            
+                            userRef.updateChildValues(["city" : replacedCity])
+        
+                        }
+                        
+                        if let state = place.administrativeArea {
+                            
+                            userRef.updateChildValues(["state" : state])
+                            
+                        }
+                        
+                        if let country = place.country {
+                            
+                            userRef.updateChildValues(["country" : country])
+                            
+                        }
+                    }
+                    
+                } else {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    
+    func updateLocation(){
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation()
+        
+        self.locUpdatetimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(updateLocationToFirebase), userInfo: nil, repeats: true)
+        
+    }
+    
+    
+    func requestWhenInUseAuthorization(){
+        
+        let status: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        
+        if status == CLAuthorizationStatus.denied {
+            
+            let title: String = (status == CLAuthorizationStatus.denied) ? "Location services are off" : "Background location is not enabled"
+            let message: String = "To use nearby features you must turn on 'When In Use' in the Location Services Settings"
+            
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert) in
+                
+                
+            }))
+            
+            alertController.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (alert) in
+                
+                if let actualSettingsURL = URL(string: UIApplicationOpenSettingsURLString){
+                    
+                    UIApplication.shared.openURL(actualSettingsURL)
+                    
+                }
+            }))
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+        } else if status == CLAuthorizationStatus.notDetermined {
+            
+            self.locationManager.requestWhenInUseAuthorization()
+            
+        } else {
+            
+            updateLocation()
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            
+            updateLocation()
+            
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            let ref = Database.database().reference().child("users").child(uid)
+            ref.child("myGymLongitude").setValue(0)
+            ref.child("myGymLatitude").setValue(0)
+            
+        }
+        
+        requestWhenInUseAuthorization()
+        beginCheckingInRange()
+        checkIfInRange()
+        
         addCloseMenu()
+        addListeners()
 
         let width = self.view.bounds.width
         self.RewardsXConstraint.constant = width
@@ -327,6 +545,12 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             rewardsController = rewards
             rewardsController?.mainRoot = self
             
+            
+        } else if segue.identifier == "collectSegue" {
+            
+            let collect = segue.destination as? CollectViewController
+            collectController = collect
+            collectController?.mainRootController = self
             
         }
     }

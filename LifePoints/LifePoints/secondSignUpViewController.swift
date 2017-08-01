@@ -9,7 +9,7 @@
 import UIKit
 import DownPicker
 
-class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate {
+class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var ageView: UIView!
     @IBOutlet weak var sexView: UIView!
@@ -29,6 +29,11 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     @IBOutlet weak var firstNameTextOutlet: UITextField!
     @IBOutlet weak var lastNameTextOutlet: UITextField!
     @IBOutlet weak var dismissKeyboardView: UIView!
+    
+    @IBOutlet weak var nextButtonOutlet: UIButton!
+    
+    
+    var sex: String = "male"
     
     
     func addDownPickerData(){
@@ -51,6 +56,7 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     
     
     @IBAction func next(_ sender: Any) {
+        
         
         toggleThree(direction: "open") { (bool) in
             
@@ -120,6 +126,8 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     
     func selectMale(){
         
+        sex = "male"
+        
         maleView.backgroundColor = hexStringToUIColor(hex: "4C4BD4")
         femaleView.backgroundColor = UIColor.clear
         
@@ -127,10 +135,44 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
     
     func selectFemale(){
         
+        sex = "female"
+        
         maleView.backgroundColor = UIColor.clear
         femaleView.backgroundColor = hexStringToUIColor(hex: "4C4BD4")
         
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if firstNameTextOutlet.text != "" && lastNameTextOutlet.text != "" {
+            
+            nextButtonOutlet.isEnabled = true
+            
+        } else {
+
+            nextButtonOutlet.isEnabled = false
+            
+        }
+        
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if firstNameTextOutlet.text != "" && lastNameTextOutlet.text != "" {
+            
+            nextButtonOutlet.isEnabled = true
+            
+        } else {
+            
+            nextButtonOutlet.isEnabled = false
+            
+        }
+
+        
+        return true
+        
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -170,7 +212,13 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
         
         firstNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         lastNameTextOutlet.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-       
+        
+        firstNameTextOutlet.delegate = self
+        lastNameTextOutlet.delegate = self
+        
+        nextButtonOutlet.isEnabled = false
+        nextButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+        nextButtonOutlet.setTitleColor(UIColor.lightGray, for: .disabled)
         
         // Do any additional setup after loading the view.
     }
@@ -194,10 +242,8 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
             let vc = segue.destination as? ThirdSignUpViewController
             thirdSignUp = vc
             thirdSignUp?.signUpTwo = self
-            
-            
+
         }
-        
     }
     
     func hexStringToUIColor (hex:String) -> UIColor {
@@ -221,7 +267,4 @@ class secondSignUpViewController: UIViewController, UIGestureRecognizerDelegate 
             alpha: CGFloat(1.0)
         )
     }
-
-    
-
 }
