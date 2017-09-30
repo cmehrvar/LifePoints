@@ -11,7 +11,7 @@ import Firebase
 
 class CollectViewController: UIViewController {
     
-    var collectedPoints = 0
+    var collecting = false
 
     weak var mainRootController: MainRootController?
     
@@ -19,21 +19,54 @@ class CollectViewController: UIViewController {
     @IBOutlet weak var collectButtonOutlet: UIButton!
     @IBOutlet weak var CurrentNumberCollected: UILabel!
     @IBOutlet weak var inRangeOutlet: UIImageView!
+    @IBOutlet weak var gymName: UILabel!
+    @IBOutlet weak var gymAddress: UILabel!
     
+    @IBOutlet weak var dailyLimitOutlet: UILabel!
     
     @IBOutlet weak var inRangeImage: UIImageView!
     
-    var beginCollectingTimer = Timer()
-    
+    var referenceDate = NSDate().timeIntervalSince1970
     
     @IBAction func collectButton(_ sender: Any) {
         
-        lpCollectNumberView.alpha = 1
-        collectButtonOutlet.alpha = 0
         
-        CurrentNumberCollected.text = "0"
-        
-        beginCollectingTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(updateLifePoints), userInfo: nil, repeats: true)
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            let ref = Database.database().reference().child("users").child(uid)
+            
+            ref.keepSynced(true)
+            
+            ref.child("startCollectTime").observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if !snapshot.exists() {
+                    
+                    ref.child("startCollectTime").setValue(NSDate().timeIntervalSince1970)
+                    ref.child("pointsCollectedToday").setValue(0)
+                    
+                } else {
+                    
+                    if let collectTime = snapshot.value as? TimeInterval {
+                        
+                        if NSDate().timeIntervalSince1970-collectTime > 28800 {
+                            
+                            ref.child("startCollectTime").setValue(NSDate().timeIntervalSince1970)
+                            ref.child("pointsCollectedToday").setValue(0)
+                            
+                            
+                        }
+                    }
+                }
+                
+                self.lpCollectNumberView.alpha = 1
+                self.collectButtonOutlet.alpha = 0
+    
+                
+                self.collecting = true
+                self.referenceDate = NSDate().timeIntervalSince1970
+                
+            })
+        }
         
     }
     
@@ -41,7 +74,7 @@ class CollectViewController: UIViewController {
     func updateLifePoints(){
         
         if let uid = Auth.auth().currentUser?.uid {
-            
+
             let pointsRef = Database.database().reference().child("users").child(uid).child("points")
             pointsRef.keepSynced(true)
             
@@ -50,8 +83,18 @@ class CollectViewController: UIViewController {
                 if let points = snapshot.value as? Int {
                     
                     let newPoints = points + 1
-                    self.collectedPoints += 1
-                    self.CurrentNumberCollected.text = String(self.collectedPoints)
+                    
+                    self.pointsCollectedToday += 1
+                    
+                    if self.pointsCollectedToday == 1000 {
+                        
+                        self.dailyLimitOutlet.alpha = 1
+                        
+                        
+                    }
+                    
+                    Database.database().reference().child("users").child(uid).child("pointsCollectedToday").setValue(self.pointsCollectedToday)
+ 
                     pointsRef.setValue(newPoints)
                     
                 }
@@ -59,6 +102,7 @@ class CollectViewController: UIViewController {
         }
     }
     
+    var pointsCollectedToday = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +112,21 @@ class CollectViewController: UIViewController {
         
         collectButtonOutlet.setImage(UIImage(named: "BeginCollecting"), for: .normal)
         collectButtonOutlet.setImage(UIImage(named: "CantCollect"), for: .disabled)
+        
+        if let uid = Auth.auth().currentUser?.uid {
+
+            Database.database().reference().child("users").child(uid).child("pointsCollectedToday").observe(.value, with: { (snapshot) in
+                
+                if let value = snapshot.value as? Int {
+                    
+                    self.pointsCollectedToday = value
+                    self.CurrentNumberCollected.text = String(value)
+                    
+                }
+            })
+        }
+        
+        
 
         // Do any additional setup after loading the view.
     }

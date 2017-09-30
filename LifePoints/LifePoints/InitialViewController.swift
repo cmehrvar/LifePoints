@@ -21,12 +21,44 @@ class InitialViewController: UIViewController {
             
             if user != nil {
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as! MainRootController
+                if let uid = Auth.auth().currentUser?.uid {
                 
-                self.present(vc, animated: true, completion: {
+                    Database.database().reference().child("users").child(uid).child("myGymLongitude").observeSingleEvent(of: .value, with: { (snapshot) in
+                        
+                        if snapshot.exists() {
+                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as! MainRootController
+                            
+                            self.present(vc, animated: true, completion: {
+                                
+                                
+                            })
+                            
+                        } else {
+                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "thirdSignUp") as! ThirdSignUpViewController
+                            
+                            self.present(vc, animated: true, completion: {
+                                
+                                vc.cameFromFacebook = true
+                                
+                                vc.backButton.alpha = 0
+                                vc.pageNumber.alpha = 0
+                                vc.haveAnAccount.alpha = 0
+                                
+                                
+                            })
+                            
+                            
+                            
+                        }
+                        
+                    })
                     
-                    
-                })
+                }
+                
+                
+                
                 
             } else {
                 

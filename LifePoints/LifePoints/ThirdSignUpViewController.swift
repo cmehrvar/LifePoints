@@ -8,27 +8,193 @@
 
 import UIKit
 import Firebase
+import GooglePlaces
 
-class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ThirdSignUpViewController: UIViewController, UICollectionViewDelegateFlowLayout, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    var globLocation: CLLocation!
+    
+    @IBOutlet weak var finishButton: UIButton!
+    
+    var cameFromFacebook = false
+    
+    
+    
+    @IBOutlet weak var buttonView: UIView!
+    
     weak var signUpTwo: secondSignUpViewController?
+    weak var gymSelectController: GoogleGymViewController?
+    
     @IBOutlet weak var gymCollectionViewOutlet: UICollectionView!
+    
+    @IBOutlet weak var selectGymConstOutlet: NSLayoutConstraint!
+    
+    @IBOutlet weak var gymButtonOutlet: UIButton!
+    @IBOutlet weak var gymAddress: UILabel!
+    
+    
+    
+    @IBOutlet weak var pageNumber: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var haveAnAccount: UIView!
+    
+    
+    
+
+    var selectedGymName = ""
+    var selectedGymAddress = ""
+    var selectedGymLat: CLLocationDegrees = 0
+    var selectedGymLong: CLLocationDegrees = 0
+
+    var selectGymOpen = false
     
     var selectedGymIndex: Int?
     
-    
-    @IBAction func finish(_ sender: Any) {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
-        if selectedGymIndex == nil {
+        
+    }
+    
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        
+        
+    }
+    
+    
+
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        
+        
+        
+    }
+    
+    
+    func toggleSelectGym(){
+        
+        var const: CGFloat = 0
+        
+        if selectGymOpen == true {
             
-            let alertController = UIAlertController(title: "No Gym Selected", message: "Please select your gym to sign up!", preferredStyle:  UIAlertControllerStyle.alert)
+            const = self.view.bounds.height
             
-            alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) -> Void in
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.selectGymConstOutlet.constant = const
+            self.view.layoutIfNeeded()
+            
+        }) { (bool) in
+            
+            self.selectGymOpen = !self.selectGymOpen
+            
+        }
+        
+        
+        
+    }
+    
+    
+    func updateLocation(){
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation()
+        
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if let lastLocation = locations.last {
+            
+            globLocation = lastLocation
+            
+            
+        }
+    }
+    
+    
+
+    
+    
+    func requestWhenInUseAuthorization(){
+        
+        let status: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        
+        if status == CLAuthorizationStatus.denied {
+            
+            let title: String = (status == CLAuthorizationStatus.denied) ? "Location services are off" : "Background location is not enabled"
+            let message: String = "To use nearby features you must turn on 'When In Use' in the Location Services Settings"
+            
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert) in
                 
                 
             }))
             
+            alertController.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (alert) in
+                
+                if let actualSettingsURL = URL(string: UIApplicationOpenSettingsURLString){
+                    
+                    UIApplication.shared.openURL(actualSettingsURL)
+                    
+                }
+            }))
+            
             self.present(alertController, animated: true, completion: nil)
+            
+        } else if status == CLAuthorizationStatus.notDetermined {
+            
+            self.locationManager.requestAlwaysAuthorization()
+            
+        } else {
+            
+            updateLocation()
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            
+            updateLocation()
+            
+        }
+    }
+
+    
+    @IBAction func chooseGym(_ sender: Any) {
+
+        toggleSelectGym()
+    }
+    
+    
+    @IBAction func finish(_ sender: Any) {
+        
+        if cameFromFacebook {
+
+            if let myUID = Auth.auth().currentUser?.uid {
+                
+               let ref = Database.database().reference().child("users").child(myUID)
+                
+                ref.child("myGymLongitude").setValue(self.selectedGymLong)
+                ref.child("myGymLatitude").setValue(self.selectedGymLat)
+                
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as?  MainRootController {
+                    
+                    self.present(vc, animated: true, completion: {
+                        
+                    })
+                }
+
+                
+            }
+            
+            
             
         } else {
             
@@ -40,26 +206,27 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
                     if error == nil {
                         
                         var userData = [AnyHashable: Any]()
-     
+                        
                         
                         userData["age"] = age
-
-                            userData["email"] = email
-
-
-                            userData["gender"] = sex
-
                         
-         
-                            userData["firstName"] = firstName
-           
-     
-                            userData["lastName"] = lastName
+                        userData["email"] = email
                         
-                        userData["gym"] = "someGym\(self.selectedGymIndex)"
+                        
+                        userData["gender"] = sex
+                        
+                        
+                        
+                        userData["firstName"] = firstName
+                        
+                        
+                        userData["lastName"] = lastName
+                        
+                        userData["gymName"] = self.selectedGymName
+                        userData["gymAddress"] = self.selectedGymAddress
+                        userData["myGymLatitude"] = self.selectedGymLat
+                        userData["myGymLongitude"] = self.selectedGymLong
                         userData["points"] = 0
-
-                        
                         
                         userData["uid"] = user?.uid
                         userData["online"] = true
@@ -82,7 +249,7 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
                                 
                             })
                         }
-
+                        
                     } else {
                         
                         print(error)
@@ -90,14 +257,16 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
                     }
                     
                 })
-
+                
                 
                 
             }
         }
     }
+ 
     
-
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 10
@@ -146,10 +315,32 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(true)
+        
+        self.selectGymConstOutlet.constant = self.view.bounds.height
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        gymAddress.adjustsFontSizeToFitWidth = true
+        
+        finishButton.setTitleColor(UIColor.white, for: .normal)
+        finishButton.setTitleColor(UIColor.lightGray, for: .disabled)
+        
+        self.buttonView.layer.cornerRadius = 3
+        
+        
+        finishButton.isEnabled = false
+        
+        updateLocation()
+        requestWhenInUseAuthorization()
+        
+        //self.selectGymConstOutlet.constant = self.view.bounds.height
+        
         // Do any additional setup after loading the view.
     }
 
@@ -159,14 +350,25 @@ class ThirdSignUpViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "googleGymSegue" {
+            
+            let nav = segue.destination as? UINavigationController
+            let vc = nav?.viewControllers.first as! GoogleGymViewController
+            
+            gymSelectController = vc
+            gymSelectController?.thirdSignUpController = self
+            
+        }
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }

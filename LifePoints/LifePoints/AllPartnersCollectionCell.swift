@@ -8,16 +8,27 @@
 
 import UIKit
 
-class AllPartnersCollectionCell: UICollectionViewCell {
+class PartnerCollectionCell: UICollectionViewCell {
     
     
-    weak var allPartnersController: AllPartnersViewController?
+    weak var rewardsController: RewardsViewController?
+    
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    
+    var buisinessUID = ""
+    
     
     
     
     @IBAction func selectStore(_ sender: Any) {
         
-        allPartnersController?.toggleSelectedStore(action: "open", completion: { (bool) in
+        self.rewardsController?.selectedStoreController?.businessUID = self.buisinessUID
+        self.rewardsController?.selectedStoreController?.loadInfo()
+        
+        rewardsController?.toggleSelectedStore(direction: "open", completion: { (bool) in
+            
+            
             
             print("store selected")
             

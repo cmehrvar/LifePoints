@@ -7,19 +7,21 @@
 //
 
 import UIKit
+import Firebase
+
 
 class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     
-    weak var allPartnersViewController: AllPartnersViewController?
+    weak var rewardsViewController: RewardsViewController?
+    
+    var businessUID = ""
+    
+    var bio = ""
     
     var currentTab = "Rewards"
     
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var tableViewText: UILabel!
-    
-    
-    
     
     @IBOutlet weak var rewardsView: UIView!
     @IBOutlet weak var bottomRewardsView: UIView!
@@ -27,6 +29,250 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var bottomMoreView: UIView!
     @IBOutlet weak var rewardsButtonOutlet: UIButton!
     @IBOutlet weak var moreButtonOutlet: UIButton!
+    
+    
+    @IBOutlet weak var addressOutlet: UILabel!
+    @IBOutlet weak var nameOutlet: UILabel!
+    @IBOutlet weak var bioOutlet: UILabel!
+    
+    @IBOutlet weak var bannerOutlet: UIImageView!
+
+    var hoursListed = false
+    
+    var storeName = ""
+    
+    var mondayTime = ""
+    var tuesdayTime = ""
+    var wednesdayTime = ""
+    var thursdayTime = ""
+    var fridayTime = ""
+    var saturdayTime = ""
+    var sundayTime = ""
+    
+    var website = ""
+    
+    var rewardUIDs = [String]()
+    var rewardPoints = [Int]()
+    var rewardDescriptions = [String]()
+    
+    
+    func loadInfo(){
+        
+        let ref = Database.database().reference().child("Partners").child(businessUID)
+        
+        ref.keepSynced(true)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let data = snapshot.value as? [String : Any] {
+ 
+                
+                if let site = data["WebSite"] as? String {
+                    
+                    self.website = site
+                    
+                }
+                
+                
+                if let hours = data["Hours"] as? [Any] {
+                    
+                    print(hours)
+                    
+                    self.hoursListed = true
+                    
+                    for i in 0..<hours.count {
+                        
+                        switch i {
+                            
+                        case 0:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.mondayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.mondayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+                            
+    
+                        case 1:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.tuesdayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.tuesdayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+
+                            
+                            
+                        case 2:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.wednesdayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.wednesdayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+
+                            
+                            
+                        case 3:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.thursdayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.thursdayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+                            
+                        case 4:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.fridayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.fridayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+                            
+                            
+                        case 5:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.saturdayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.saturdayTime = from + " to " + to
+                                    
+                                }
+                                
+                            }
+                            
+                            
+                        case 6:
+                            
+                            if let dict = hours[i] as? [AnyHashable:Any], let from = dict["from"] as? String, let to = dict["to"] as? String, let closed = dict["closed"] as? Bool {
+                                
+                                if closed {
+                                    
+                                    self.sundayTime = "closed"
+                                    
+                                } else {
+                                    
+                                    self.sundayTime = from + " to " + to
+                                    
+                                }
+                            }
+                            
+                            
+                        default:
+                            
+                            break
+                            
+                        }
+                    }
+                } else {
+                    
+                    self.hoursListed = false
+                    
+                }
+                
+                
+                if let name = data["Name"] as? String {
+                    
+                    self.storeName = name
+                    self.nameOutlet.text = name
+                    
+                }
+                
+                if let address = data["Address"] as? String {
+                    
+                    self.addressOutlet.text = address
+                    
+                }
+                
+                if let bio = data["bio"] as? String {
+                    
+                    self.bio = bio
+                    
+                }
+                
+                if let banner = data["Banner"] as? String, let url = NSURL(string: banner) {
+                    
+                    self.bannerOutlet.sd_setImage(with: url as URL)
+                    
+                }
+
+                if let rewards = data["Rewards"] as? [String : Any]{
+                    
+                    for (key, value) in rewards {
+                        
+                        if let dictValue = value as? [String : Any] {
+                            
+                            print(dictValue)
+                            
+                            if let description = dictValue["RewardDescription"] as? String, let LPValue = dictValue["LPValue"] as? String {
+                                
+                                self.rewardUIDs.append(key)
+                                self.rewardDescriptions.append(description)
+                                
+                                if let intPoints = Int(LPValue) {
+                                    
+                                    self.rewardPoints.append(intPoints)
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+
+                print(self.rewardUIDs)
+                print(self.rewardDescriptions)
+                print(self.rewardPoints)
+                
+                self.myTableView.reloadData()
+                
+            }
+        })
+    }
     
     
     @IBAction func rewards(_ sender: Any) {
@@ -82,7 +328,13 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func back(_ sender: Any) {
         
-        allPartnersViewController?.toggleSelectedStore(action: "close", completion: { (bool) in
+        rewardUIDs.removeAll()
+        rewardDescriptions.removeAll()
+        rewardPoints.removeAll()
+        
+        myTableView.reloadData()
+        
+        rewardsViewController?.toggleSelectedStore(direction: "close", completion: { (bool) in
             
             print("selected store closed")
             
@@ -93,31 +345,72 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         tableView.allowsSelection = false
-        
-        var cell = UITableViewCell()
-        
+
         if currentTab == "Rewards" {
             
-            tableViewText.text = "Click on the reward you would like to redeem your LifePoints for. Rewards will be put into the 'My Rewards' folder."
+            bioOutlet.text = "Click on the reward you would like to redeem your LifePoints for. Rewards will be put into the 'My Rewards' folder."
             
-            cell = tableView.dequeueReusableCell(withIdentifier: "reward", for: indexPath) as! StoreRewardTableViewCell
+            let rewardCell = tableView.dequeueReusableCell(withIdentifier: "reward", for: indexPath) as! StoreRewardTableViewCell
             
-        } else if currentTab == "More" {
+            rewardCell.selectedStoreController = self
             
-            tableViewText.text = "Canada's leading sports nutrition stores since 1989. Lowest supplement prices guaranteed with over 120 locations across Canada."
+            rewardCell.pointsOutlet.text = String(rewardPoints[indexPath.row])
+            rewardCell.descriptionOutlet.text = rewardDescriptions[indexPath.row]
             
-            cell = tableView.dequeueReusableCell(withIdentifier: "hoursOfOperation", for: indexPath) as! HoursOfOperationTableViewCell
+            rewardCell.rewardUID = rewardUIDs[indexPath.row]
             
-        }
-
-        return cell
+            rewardCell.points = rewardPoints[indexPath.row]
+            rewardCell.someDescription = rewardDescriptions[indexPath.row]
+            
+            rewardCell.storeName = storeName
+            
+            return rewardCell
+            
+            
+            
+        } else {
         
+            
+            bioOutlet.text = self.bio
+            
+            let hoursCell = tableView.dequeueReusableCell(withIdentifier: "hoursOfOperation", for: indexPath) as! HoursOfOperationTableViewCell
+            
+            if hoursListed == true {
+                
+                hoursCell.hoursNotListed.alpha = 0
+                
+            } else {
+                
+                hoursCell.hoursNotListed.alpha = 1
+                
+            }
+            
+            hoursCell.mondayTime.text = mondayTime
+            hoursCell.tuesdayTime.text = tuesdayTime
+            hoursCell.wednesdayTime.text = wednesdayTime
+            hoursCell.thursdayTime.text = thursdayTime
+            hoursCell.fridayTime.text = fridayTime
+            hoursCell.saturdayTime.text = saturdayTime
+            hoursCell.sundayTime.text = sundayTime
+            
+            hoursCell.website = website
+  
+            return hoursCell
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 1
         
+        if currentTab == "Rewards" {
+            
+            return rewardUIDs.count
+            
+        } else {
+            
+            return 1
+            
+        }
     }
     
     

@@ -15,12 +15,15 @@ import AWSS3
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    weak var rootController: MainRootController?
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameOutlet: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
-    
-    
+
+    @IBOutlet weak var gymName: UILabel!
+    @IBOutlet weak var gymAddress: UILabel!
+
     @IBAction func editProfile(_ sender: Any) {
         
         self.presentImagePicker()
@@ -28,9 +31,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
 
-    
 
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
         self.profileImage.image = image
@@ -126,6 +127,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             
         }))
         
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
         
         self.present(alertController, animated: true, completion: nil)
         
@@ -156,6 +163,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                         self.backgroundImage.sd_setImage(with: url)
                         
                     }
+                    
+                    if let gymName = data["gymName"] as? String, let gymAddress = data["gymAddress"] as? String {
+                        
+                        self.gymName.text = gymName
+                        self.gymAddress.text = gymAddress
+                        
+                        self.rootController?.collectController?.gymAddress.text = gymAddress
+                        self.rootController?.collectController?.gymName.text = gymName
+                        
+                    }                    
                 }
             })
         }

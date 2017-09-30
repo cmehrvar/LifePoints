@@ -17,6 +17,64 @@ class MenuViewController: UIViewController, UIGestureRecognizerDelegate {
     weak var mainRoot: MainRootController?
     
     
+    
+    
+    
+    @IBAction func facebook(_ sender: Any) {
+        
+        if let url = URL(string: "https://www.facebook.com/LifePointsOFC/") {
+            
+            UIApplication.shared.openURL(url)
+            
+        }
+        
+        
+        
+    }
+    
+    
+    @IBAction func twitter(_ sender: Any) {
+        
+        if let url = URL(string: "https://twitter.com/LifePointsOFC") {
+            
+            UIApplication.shared.openURL(url)
+            
+        }
+    }
+    
+    
+    @IBAction func instagram(_ sender: Any) {
+        
+        if let url = URL(string: "https://www.instagram.com/lifepointsapp/") {
+            
+            UIApplication.shared.openURL(url)
+            
+        }
+        
+    }
+ 
+    
+    
+    
+    @IBAction func callHistory(_ sender: Any) {
+        
+        
+        mainRoot?.toggleMenu(completion: { (bool) in
+            
+            self.mainRoot?.toggleHistory(action: "open", completion: { (bool) in
+                
+                print("history opened")
+                
+                
+            })
+            
+        })
+        
+        
+    }
+    
+    
+    
     @IBAction func singOut(_ sender: Any) {
         
         if let uid = Auth.auth().currentUser?.uid {
@@ -66,6 +124,16 @@ class MenuViewController: UIViewController, UIGestureRecognizerDelegate {
         mainRoot?.toggleMenu(completion: { (bool) in
             
             print("menu closed")
+            
+        })
+        
+    }
+    
+    @IBAction func changeGym(_ sender: Any) {
+        
+        mainRoot?.toggleMenu(completion: { (bool) in
+            
+            self.mainRoot?.toggleMainGym()
             
         })
         

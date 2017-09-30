@@ -11,6 +11,7 @@ import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
 import AWSS3
+import GooglePlaces
 
 
 @UIApplicationMain
@@ -24,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.statusBarStyle = .lightContent
         
+        GMSPlacesClient.provideAPIKey("AIzaSyD1bcUx_sPrm3UJSFc8fGjkUrEOhdT8tJM")
+        
+        
+        
         FirebaseApp.configure()
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -32,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                 identityPoolId:"us-east-1:6594b46d-9999-456e-9af7-bace2751204a")
         let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
+        
+        Database.database().isPersistenceEnabled = true
         
         return true
     }

@@ -28,7 +28,226 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
     weak var firstSignUp: firstSignUpViewController?
     
     @IBAction func facebookLogIn(_ sender: Any) {
+
+            
+            let login: FBSDKLoginManager = FBSDKLoginManager()
+            login.logIn(withReadPermissions: ["email", "user_birthday", "user_relationship_details", "user_work_history", "user_location", "user_friends"], from: self) { (result, error) in
+                
+                if error == nil {
+                    
+                    print("logged in")
+                    if FBSDKAccessToken.current() != nil {
+                        
+                        let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                        
+                        Auth.auth().signIn(with: credential, completion: { (user, error) -> Void in
+                            
+                            if error == nil {
+                                
+                                if let uid = user?.uid {
+                                    
+                                    let businessReq = FBSDKGraphRequest(graphPath: "me/ids_for_business", parameters: nil, httpMethod: "GET")
+                                    
+                                    businessReq?.start(completionHandler: { (connection, result, error) in
+                                        
+                                        if error == nil {
+                                            
+                                            print(result)
+                                            
+                                            if let dictResult = result as? [AnyHashable : Any], let data = dictResult["data"] as? [[AnyHashable : Any]] {
+                                                
+                                                for value in data {
+                                                    
+                                                    if let id = value["id"] as? String {
+                                                        
+                                                        Database.database().reference().child("facebookUIDs").child(id).setValue(uid)
+                                                        Database.database().reference().child("users").child(uid).child("facebookId").setValue(id)
+                                                        
+                                                    }
+                                                }
+                                            }
+                                            
+                                        } else {
+                                            
+                                            print(error)
+                                            
+                                        }
+                                        
+                                    })
+                                    
+                                    
+                                    self.checkIfTaken("users", credential: uid, completion: { (taken) in
+                                        
+                                        if !taken {
+                                            
+                                            if let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email, first_name, last_name, gender, birthday, age_range, interested_in, work, location, picture"], tokenString: result?.token.tokenString, version: nil, httpMethod: "GET") {
+                                                
+                                                req.start(completionHandler: { (connection, result, error) in
+                                                    
+                                                    if error == nil {
+                                                        
+                                                        if let graphResult = result as? [AnyHashable : Any] {
+                                                            
+                                                            var userData = [AnyHashable: Any]()
+                                                            
+                                                            print(graphResult)
+                                                            
+                                                            if let birthday = graphResult["birthday"] as? String {
+                                                                
+                                                                let dateFormatter = DateFormatter()
+                                                                dateFormatter.dateFormat = "MM-dd-yyyy"
+                                                                
+                                                                if let date = dateFormatter.date(from: birthday) {
+                                                                    
+                                                                    let timeInterval = date.timeIntervalSince1970
+                                                                    userData["age"] = timeInterval
+                                                                    
+                                                                } else if let ageRange = graphResult["age_range"] as? [String : Int], let minAge = ageRange["min"] {
+                                                                    
+                                                                    userData["minAge"] = minAge
+                                                                    
+                                                                }
+                                                            }
+                                                            
+                                                            print(graphResult)
+                                                            
+                                                            if let email = graphResult["email"] as? String {
+                                                                userData["email"] = email
+                                                            }
+                                                            
+                                                            if let gender = graphResult["gender"] as? String {
+                                                                userData["gender"] = gender
+                                                            }
+                                                            
+                                                            if let id = graphResult["id"] as? String {
+                                                                userData["profilePicture"] = "https://graph.facebook.com/" + id + "/picture?type=large"
+                                                            }
+                                                            
+                                                            
+                                                            if let firstName = graphResult["first_name"] as? String {
+                                                                
+                                                                userData["firstName"] = firstName
+                                                                
+                                                            }
+                                                            
+                                                            if let lastName = graphResult["last_name"] as? String {
+                                                                
+                                                                userData["lastName"] = lastName
+                                                                
+                                                            }
+                                                            
+                                                            if let occupations = graphResult["work"] as? [[AnyHashable: Any]], let latest = occupations.first, let position = latest["position"] as? [AnyHashable: Any], let name = position["name"] as? String, let employer = latest["employer"] as? [AnyHashable: Any], let employerName = employer["name"] as? String{
+                                                                
+                                                                userData["employer"] = employerName
+                                                                userData["occupation"] = name
+                                                                
+                                                            }
+                                                            
+                                                            if let currentCity = graphResult["location"] as? [String : AnyObject], let name = currentCity["name"] as? String {
+                                                                
+                                                                let components = name.components(separatedBy: ", ")
+                                                                
+                                                                if components.count >= 1 {
+                                                                    
+                                                                    let city = components[0]
+                                                                    userData["city"] = city.replacingOccurrences(of: ".", with: "")
+                                                                    
+                                                                }
+                                                                
+                                                                if components.count == 2 {
+                                                                    userData["state"] = components[1]
+                                                                }
+                                                            }
+                                                            
+                                                            
+                                                            userData["uid"] = uid
+                                                            userData["online"] = true
+                                                            userData["lastActive"] = Date().timeIntervalSince1970
+                                                            userData["points"] = 0
+                                                            
+                                                            let ref = Database.database().reference()
+                                                            ref.keepSynced(true)
+                                                            
+                                                            ref.child("users").child(uid).setValue(userData)
+                                                            
+                                                            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "thirdSignUp") as?  ThirdSignUpViewController {
+                                                                
+                                                                self.present(vc, animated: true, completion: {
+                                                                    
+                                                                    vc.cameFromFacebook = true
+                                                                    
+                                                                    vc.backButton.alpha = 0
+                                                                    vc.haveAnAccount.alpha = 0
+                                                                    vc.pageNumber.alpha = 0
+                                                                    
+                                                                })
+                                                            }
+                                                            
+                                                            
+                                                            
+                                                        }
+                                                    }
+                                                })
+                                                
+                                            }
+                                            
+                                        } else {
+                                            
+                                            let ref = Database.database().reference().child("users").child(uid).child("myGymLongitude")
+                                            
+                                            ref.keepSynced(true)
+                                            
+                                            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                                                
+                                                if snapshot.exists() {
+                                                    
+                                                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as? MainRootController {
+                                                        
+                                                        self.present(vc, animated: true, completion: {
+                                                            
+                                                            
+                                                        })
+                                                        
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                } else {
+                                                    
+                                                    if let vc = self.storyboard?.instantiateViewController(withIdentifier: "thirdSignUp") as? ThirdSignUpViewController {
+                                                        
+                                                        self.present(vc, animated: true, completion: {
+                                                            
+                                                            vc.cameFromFacebook = true
+                                                            
+                                                            vc.backButton.alpha = 0
+                                                            vc.haveAnAccount.alpha = 0
+                                                            vc.pageNumber.alpha = 0
+                                                            
+                                                            
+                                                        })
+                                                        
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                                
+                            } else {
+                                print(error)
+                            }
+                        })
+                    } else {
+                        
+                        print("no token")
+                        
+                    }
+                }
+            }
         
+        
+        /*
         let alertController = NYAlertViewController()
         
         alertController.backgroundTapDismissalGestureEnabled = true
@@ -45,202 +264,19 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
         alertController.cancelButtonColor = UIColor.lightGray
         
         alertController.addAction(NYAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            
+         
             self.dismiss(animated: true, completion: nil)
             
         }))
         
         alertController.addAction(NYAlertAction(title: "Agree", style: .default, handler: { (action) in
             
-            self.dismiss(animated: true, completion: {
-                
-                let login: FBSDKLoginManager = FBSDKLoginManager()
-                login.logIn(withReadPermissions: ["email", "user_birthday", "user_relationship_details", "user_work_history", "user_location", "user_friends"], from: self) { (result, error) in
-                    
-                    if error == nil {
-                        
-                        print("logged in")
-                        if FBSDKAccessToken.current() != nil {
-                            
-                            let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                            
-                            Auth.auth().signIn(with: credential, completion: { (user, error) -> Void in
-                                
-                                if error == nil {
-                                    
-                                    if let uid = user?.uid {
-                                        
-                                        let businessReq = FBSDKGraphRequest(graphPath: "me/ids_for_business", parameters: nil, httpMethod: "GET")
-                                        
-                                        businessReq?.start(completionHandler: { (connection, result, error) in
-                                            
-                                            if error == nil {
-                                                
-                                                print(result)
-                                                
-                                                if let dictResult = result as? [AnyHashable : Any], let data = dictResult["data"] as? [[AnyHashable : Any]] {
-                                                    
-                                                    for value in data {
-                                                        
-                                                        if let id = value["id"] as? String {
-                                                            
-                                                            Database.database().reference().child("facebookUIDs").child(id).setValue(uid)
-                                                            Database.database().reference().child("users").child(uid).child("facebookId").setValue(id)
-                                                            
-                                                        }
-                                                    }
-                                                }
-                                                
-                                            } else {
-                                                
-                                                print(error)
-                                                
-                                            }
-                                            
-                                        })
-                                        
-                                        
-                                        self.checkIfTaken("users", credential: uid, completion: { (taken) in
-                                            
-                                            if !taken {
-                                                
-                                                if let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email, first_name, last_name, gender, birthday, age_range, interested_in, work, location, picture"], tokenString: result?.token.tokenString, version: nil, httpMethod: "GET") {
-                                                    
-                                                    req.start(completionHandler: { (connection, result, error) in
-                                                        
-                                                        if error == nil {
-                                                            
-                                                            if let graphResult = result as? [AnyHashable : Any] {
-                                                                
-                                                                var userData = [AnyHashable: Any]()
-                                                                
-                                                                print(graphResult)
-                                                                
-                                                                if let birthday = graphResult["birthday"] as? String {
-                                                                    
-                                                                    let dateFormatter = DateFormatter()
-                                                                    dateFormatter.dateFormat = "MM-dd-yyyy"
-                                                                    
-                                                                    if let date = dateFormatter.date(from: birthday) {
-                                                                        
-                                                                        let timeInterval = date.timeIntervalSince1970
-                                                                        userData["age"] = timeInterval
-                                                                        
-                                                                    } else if let ageRange = graphResult["age_range"] as? [String : Int], let minAge = ageRange["min"] {
-                                                                        
-                                                                        userData["minAge"] = minAge
-                                                                        
-                                                                    }
-                                                                }
-                                                                
-                                                                print(graphResult)
-                                                                
-                                                                if let email = graphResult["email"] as? String {
-                                                                    userData["email"] = email
-                                                                }
-                                                                
-                                                                if let gender = graphResult["gender"] as? String {
-                                                                    userData["gender"] = gender
-                                                                }
-                                                                
-                                                                if let id = graphResult["id"] as? String {
-                                                                    userData["profilePicture"] = "https://graph.facebook.com/" + id + "/picture?type=large"
-                                                                }
-                                                                
-                                                                
-                                                                if let firstName = graphResult["first_name"] as? String {
-                                                                    
-                                                                    userData["firstName"] = firstName
-                                                                    
-                                                                }
-                                                                
-                                                                if let lastName = graphResult["last_name"] as? String {
-                                                                    
-                                                                    userData["lastName"] = lastName
-                                                                    
-                                                                }
-                                                                
-                                                                if let occupations = graphResult["work"] as? [[AnyHashable: Any]], let latest = occupations.first, let position = latest["position"] as? [AnyHashable: Any], let name = position["name"] as? String, let employer = latest["employer"] as? [AnyHashable: Any], let employerName = employer["name"] as? String{
-                                                                    
-                                                                    userData["employer"] = employerName
-                                                                    userData["occupation"] = name
-                                                                    
-                                                                }
-                                                                
-                                                                if let currentCity = graphResult["location"] as? [String : AnyObject], let name = currentCity["name"] as? String {
-                                                                    
-                                                                    let components = name.components(separatedBy: ", ")
-                                                                    
-                                                                    if components.count >= 1 {
-                                                                        
-                                                                        let city = components[0]
-                                                                        userData["city"] = city.replacingOccurrences(of: ".", with: "")
-                                                                        
-                                                                    }
-                                                                    
-                                                                    if components.count == 2 {
-                                                                        userData["state"] = components[1]
-                                                                    }
-                                                                }
-                                                                
-                                                                
-                                                                userData["uid"] = uid
-                                                                userData["online"] = true
-                                                                userData["lastActive"] = Date().timeIntervalSince1970
-                                                                userData["points"] = 0
-                                                                
-                                                                let ref = Database.database().reference()
-                                                                ref.keepSynced(true)
-                                                                
-                                                                ref.child("users").child(uid).setValue(userData)
-                                                                
-                                                                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as?  MainRootController {
-                                                                    
-                                                                    self.present(vc, animated: true, completion: {
-                                                                        
-                                                                                                                                            })
-                                                                }
-
-                                                                
-                                                                
-                                                            }
-                                                        }
-                                                    })
-                                                    
-                                                }
-                                                
-                                            } else {
-                                                
-                                                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainRootController") as? MainRootController {
-                                                    
-                                                    self.present(vc, animated: true, completion: {
-                                                        
-                                                        
-                                                    })
-             
-                                                }
-                                                
-                                            }
-                                        })
-                                    }
-                                    
-                                } else {
-                                    print(error)
-                                }
-                            })
-                        } else {
-                            
-                            print("no token")
-                            
-                        }
-                    }
-                }
-            })
+            
         }))
         
         
         self.present(alertController, animated: true, completion: nil)
-
+*/
         
     }
     
@@ -339,29 +375,22 @@ class LogInController: UIViewController, UIGestureRecognizerDelegate {
                             alertController.message = "Please enter a valid e-mail"
                             self.present(alertController, animated: true, completion: nil)
                         }
- 
                         
+                        if error?.localizedDescription == "Network error (such as timeout, interrupted connection or unreachable host) has occurred." {
+                            
+                            alertController.message = "No internet connection, please try again"
+                            self.present(alertController, animated: true, completion: nil)
+                            
+                        }
                     }
-                    
-                    
                 })
-                
             }
-            
-            
-            
-            
         } else {
             
             print("no username, no password")
             
         }
-        
-        
-        
     }
-    
-    
     
     func checkIfTaken(_ key: String, credential: String, completion: @escaping (_ taken: Bool) -> ()) {
         

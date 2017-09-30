@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		188C2DD9337286C576B8D4F1 /* Pods_LifePointsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */; };
-		A35CCA671EED9A1D0019916B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */; };
 		A38D47481EF863DC00B153FF /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */; };
 		A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDA1ECA30A500CD7097 /* AppDelegate.swift */; };
 		A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A94EDC1ECA30A500CD7097 /* LogInController.swift */; };
@@ -26,9 +25,7 @@
 		A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F871ECA70E10067D229 /* RewardsViewController.swift */; };
 		A3B47F8A1ECA82100067D229 /* MyRewardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F891ECA82100067D229 /* MyRewardsCell.swift */; };
 		A3B47F8E1ED14FC50067D229 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */; };
-		A3B47F901ED1ECB60067D229 /* AllPartnersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */; };
 		A3B47F921ED1F11F0067D229 /* AllPartnersCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */; };
-		A3B47F941ED1F69C0067D229 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */; };
 		A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */; };
 		A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */; };
 		A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */; };
@@ -37,6 +34,13 @@
 		E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */; };
 		E77B23BC1F0B20EE00A7D95C /* EUROSTIB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */; };
 		E77B23BE1F10196700A7D95C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B23BD1F10196700A7D95C /* InitialViewController.swift */; };
+		E783A7641F7B36A4008BB85A /* MainGoogleGymViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783A7631F7B36A4008BB85A /* MainGoogleGymViewController.swift */; };
+		E79ACD0B1F54F42E002905AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E79ACD0A1F54F42E002905AF /* GoogleService-Info.plist */; };
+		E79ACD0D1F57AF3A002905AF /* MyChallengesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79ACD0C1F57AF3A002905AF /* MyChallengesTableViewCell.swift */; };
+		E7F3A8461F785D8D00BA43C7 /* GoogleGymViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F3A8451F785D8D00BA43C7 /* GoogleGymViewController.swift */; };
+		E7F3A8481F79722600BA43C7 /* GoogleGymTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F3A8471F79722600BA43C7 /* GoogleGymTableViewCell.swift */; };
+		E7F9EC971F6DFD350023D3AF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9EC961F6DFD350023D3AF /* HistoryViewController.swift */; };
+		E7F9EC991F6EFC940023D3AF /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9EC981F6EFC940023D3AF /* HistoryTableViewCell.swift */; };
 		ED125C0B8FDF55892885F224 /* Pods_LifePoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +69,6 @@
 		6C2246F2CFA2CF7955811CED /* Pods_LifePoints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePoints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		784DE62ED0B9BC833DF98AC3 /* Pods-LifePoints.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePoints.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePoints/Pods-LifePoints.release.xcconfig"; sourceTree = "<group>"; };
 		78E823B214E1D97844BA66FF /* Pods-LifePointsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsTests/Pods-LifePointsTests.release.xcconfig"; sourceTree = "<group>"; };
-		A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A365357AE1F305BC67E8C123 /* Pods_LifePointsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifePointsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
 		A3A94ED71ECA30A500CD7097 /* LifePoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifePoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,9 +93,7 @@
 		A3B47F871ECA70E10067D229 /* RewardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
 		A3B47F891ECA82100067D229 /* MyRewardsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRewardsCell.swift; sourceTree = "<group>"; };
 		A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPartnersViewController.swift; sourceTree = "<group>"; };
 		A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPartnersCollectionCell.swift; sourceTree = "<group>"; };
-		A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		A3B47F951ED370E30067D229 /* SelectedStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedStoreViewController.swift; sourceTree = "<group>"; };
 		A3B47F981ED381180067D229 /* HoursOfOperationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursOfOperationTableViewCell.swift; sourceTree = "<group>"; };
 		A3B47F9A1ED381240067D229 /* StoreRewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRewardTableViewCell.swift; sourceTree = "<group>"; };
@@ -100,6 +101,13 @@
 		E77B23B91F0B120A00A7D95C /* SelectGymCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectGymCollectionViewCell.swift; sourceTree = "<group>"; };
 		E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EUROSTIB.ttf; sourceTree = "<group>"; };
 		E77B23BD1F10196700A7D95C /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		E783A7631F7B36A4008BB85A /* MainGoogleGymViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGoogleGymViewController.swift; sourceTree = "<group>"; };
+		E79ACD0A1F54F42E002905AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E79ACD0C1F57AF3A002905AF /* MyChallengesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyChallengesTableViewCell.swift; sourceTree = "<group>"; };
+		E7F3A8451F785D8D00BA43C7 /* GoogleGymViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleGymViewController.swift; sourceTree = "<group>"; };
+		E7F3A8471F79722600BA43C7 /* GoogleGymTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleGymTableViewCell.swift; sourceTree = "<group>"; };
+		E7F9EC961F6DFD350023D3AF /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		E7F9EC981F6EFC940023D3AF /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		F4E17F8626FE39EC14BD687B /* Pods-LifePointsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifePointsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LifePointsUITests/Pods-LifePointsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,7 +155,7 @@
 		A3A94ECE1ECA30A500CD7097 = {
 			isa = PBXGroup;
 			children = (
-				A35CCA661EED9A1D0019916B /* GoogleService-Info.plist */,
+				E79ACD0A1F54F42E002905AF /* GoogleService-Info.plist */,
 				E77B23BB1F0B20EE00A7D95C /* EUROSTIB.ttf */,
 				A38D47471EF863DC00B153FF /* AvenirLTStd-Book.otf */,
 				A3A94ED91ECA30A500CD7097 /* LifePoints */,
@@ -185,6 +193,12 @@
 				A3B47F851ECA6A760067D229 /* CollectViewController.swift */,
 				E77B23B51F0AD6B400A7D95C /* MenuViewController.swift */,
 				E77B23BD1F10196700A7D95C /* InitialViewController.swift */,
+				E79ACD0C1F57AF3A002905AF /* MyChallengesTableViewCell.swift */,
+				E7F9EC961F6DFD350023D3AF /* HistoryViewController.swift */,
+				E7F9EC981F6EFC940023D3AF /* HistoryTableViewCell.swift */,
+				E7F3A8451F785D8D00BA43C7 /* GoogleGymViewController.swift */,
+				E7F3A8471F79722600BA43C7 /* GoogleGymTableViewCell.swift */,
+				E783A7631F7B36A4008BB85A /* MainGoogleGymViewController.swift */,
 			);
 			path = LifePoints;
 			sourceTree = "<group>";
@@ -222,9 +236,7 @@
 				A3B47F971ED380FD0067D229 /* SelectedStore */,
 				A3B47F871ECA70E10067D229 /* RewardsViewController.swift */,
 				A3B47F8D1ED14FC50067D229 /* CategoryCollectionViewCell.swift */,
-				A3B47F8F1ED1ECB60067D229 /* AllPartnersViewController.swift */,
 				A3B47F911ED1F11F0067D229 /* AllPartnersCollectionCell.swift */,
-				A3B47F931ED1F69C0067D229 /* HeaderCollectionReusableView.swift */,
 			);
 			name = Rewards;
 			sourceTree = "<group>";
@@ -347,6 +359,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 8YKL2VACPX;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					A3A94EEA1ECA30A500CD7097 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -387,12 +404,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A35CCA671EED9A1D0019916B /* GoogleService-Info.plist in Resources */,
 				A38D47481EF863DC00B153FF /* AvenirLTStd-Book.otf in Resources */,
 				A3A94EE51ECA30A500CD7097 /* LaunchScreen.storyboard in Resources */,
 				A3A94EE21ECA30A500CD7097 /* Assets.xcassets in Resources */,
 				A3A94EE01ECA30A500CD7097 /* Main.storyboard in Resources */,
 				E77B23BC1F0B20EE00A7D95C /* EUROSTIB.ttf in Resources */,
+				E79ACD0B1F54F42E002905AF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,14 +573,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3B47F8E1ED14FC50067D229 /* CategoryCollectionViewCell.swift in Sources */,
-				A3B47F941ED1F69C0067D229 /* HeaderCollectionReusableView.swift in Sources */,
 				A3A94EDD1ECA30A500CD7097 /* LogInController.swift in Sources */,
-				A3B47F901ED1ECB60067D229 /* AllPartnersViewController.swift in Sources */,
 				A3AD81891EDC96480092A2EE /* ThirdSignUpViewController.swift in Sources */,
+				E7F9EC971F6DFD350023D3AF /* HistoryViewController.swift in Sources */,
 				A3B47F861ECA6A760067D229 /* CollectViewController.swift in Sources */,
+				E7F3A8461F785D8D00BA43C7 /* GoogleGymViewController.swift in Sources */,
 				A3A94F091ECA410000CD7097 /* MainRootController.swift in Sources */,
 				A3B47F991ED381180067D229 /* HoursOfOperationTableViewCell.swift in Sources */,
+				E79ACD0D1F57AF3A002905AF /* MyChallengesTableViewCell.swift in Sources */,
 				A3AD81851EDB43B40092A2EE /* firstSignUpViewController.swift in Sources */,
+				E7F9EC991F6EFC940023D3AF /* HistoryTableViewCell.swift in Sources */,
 				A3B47F881ECA70E10067D229 /* RewardsViewController.swift in Sources */,
 				A3B47F841ECA6A6B0067D229 /* ProfileViewController.swift in Sources */,
 				E77B23BA1F0B120A00A7D95C /* SelectGymCollectionViewCell.swift in Sources */,
@@ -574,6 +593,8 @@
 				A3AD81871EDB43F30092A2EE /* secondSignUpViewController.swift in Sources */,
 				A3A94EDB1ECA30A500CD7097 /* AppDelegate.swift in Sources */,
 				A3B47F9B1ED381240067D229 /* StoreRewardTableViewCell.swift in Sources */,
+				E7F3A8481F79722600BA43C7 /* GoogleGymTableViewCell.swift in Sources */,
+				E783A7641F7B36A4008BB85A /* MainGoogleGymViewController.swift in Sources */,
 				A3B47F961ED370E30067D229 /* SelectedStoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

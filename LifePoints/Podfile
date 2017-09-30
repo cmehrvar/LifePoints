@@ -17,6 +17,9 @@ pod ‘Firebase/Database’
 pod ‘Firebase/Auth’
 pod ‘NYAlertViewController’
 pod 'DownPicker'
+pod 'GooglePlaces'
+pod 'GooglePlacePicker'
+pod 'GoogleMaps'
 
 
 

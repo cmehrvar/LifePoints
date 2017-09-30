@@ -11,6 +11,7 @@ import Firebase
 import CoreLocation
 
 class MainRootController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+    @IBOutlet weak var redemptionView: UIView!
 
     let locationManager = CLLocationManager()
     var globLocation: CLLocation!
@@ -18,17 +19,36 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     var locUpdatetimer = Timer()
     var checkRangeTimer = Timer()
     
+    
+    var mainGymOpen = false
+    
+    
     var menuOpen = false
+    
+    var historyOpen = false
     
     var firstLocationUpload = false
     
     var currentTab = "profile"
     var currentBottomTab = "myRewards"
     
+    var rewardTitleToRedeem = ""
+    var rewardPointsToRedeem = 0
+    var rewardPartnerToRedeem = ""
+    var rewardUIDtoRedeem = ""
+    
+    weak var googleGymController: MainGoogleGymViewController?
     weak var menuController: MenuViewController?
     weak var rewardsController: RewardsViewController?
     weak var collectController: CollectViewController?
+    weak var historyController: HistoryViewController?
+    weak var profileController: ProfileViewController?
     
+    
+    @IBOutlet weak var comingSoonView: UIView!
+
+    @IBOutlet weak var gymSelectConst: NSLayoutConstraint!
+
     @IBOutlet weak var TableViewText: UILabel!
     
     @IBOutlet weak var ProfileXConstraint: NSLayoutConstraint!
@@ -36,6 +56,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var myTableView: UITableView!
     
+    @IBOutlet weak var googleSelectGym: UIView!
     
     @IBOutlet weak var profilePageOutlet: UIButton!
     @IBOutlet weak var rewardsPageOutlet: UIButton!
@@ -49,8 +70,124 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var myChallengesOutlet: UIButton!
     @IBOutlet weak var greyViewOutlet: UIView!
     @IBOutlet weak var menuContainerLeading: NSLayoutConstraint!
+    @IBOutlet weak var redeemViewOutlet: UIView!
+    @IBOutlet weak var blurViewOutletj: UIVisualEffectView!
+    
+    @IBOutlet weak var redemptionDescriptionOutlet: UILabel!
+    @IBOutlet weak var partnerDescriptionOutlet: UILabel!
+    
+    @IBOutlet weak var redemptionSliderOutlet: UIImageView!
+    
+    
+    
+    @IBOutlet weak var redemptionSliderViewOutlet: UIView!
+    
+    
+    @IBOutlet weak var redemptionSliderConstOutlet: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var redemptionSliderWidthOutlet: UIView!
+
+    @IBOutlet weak var historyContainerConstOutlet: NSLayoutConstraint!
+    
     
     @IBOutlet weak var pointsOutlet: UILabel!
+    
+    
+    var challengeUIDs = [String]()
+    var challengePoints = [Int]()
+    var challengeDescriptions = [String]()
+    var challengeObtainValue = [Int]()
+    var challengeObtainUnit = [String]()
+    
+    
+    var rewardUIDs = [String]()
+    var rewardPartners = [String]()
+    var rewardPoints = [Int]()
+    var rewardDescriptions = [String]()
+    
+
+    func toggleMainGym(){
+        
+        var const: CGFloat = 0
+        
+        if mainGymOpen == true {
+            
+            const = self.view.bounds.height
+            
+        }
+
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.gymSelectConst.constant = const
+            self.view.layoutIfNeeded()
+            
+        }) { (bool) in
+            
+            self.mainGymOpen = !self.mainGymOpen
+
+        }
+    }
+    
+    
+    
+    @IBAction func redemptionCancel(_ sender: Any) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.redeemViewOutlet.alpha = 0
+            self.blurViewOutletj.alpha = 0
+            self.view.layoutIfNeeded()
+            
+        }) { (bool) in
+            
+            print("redemption closed")
+            
+        }
+    }
+    
+    func loadChallenges() {
+        
+        let ref = Database.database().reference().child("Challenges")
+        
+        ref.keepSynced(true)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let data = snapshot.value as? [String : Any] {
+                
+                self.challengeUIDs.removeAll()
+                self.challengePoints.removeAll()
+                self.challengeDescriptions.removeAll()
+                self.challengeObtainUnit.removeAll()
+                self.challengeObtainValue.removeAll()
+                
+                for (key, value) in data {
+                    
+                    if let dictValue = value as? [String : Any] {
+                        
+                        if let points = dictValue["points"] as? Int, let obtainValue = dictValue["obtainValue"] as? Int, let someDescription = dictValue["description"] as? String, let obtainUnit = dictValue["obtainUnit"] as? String {
+                            
+                            self.challengeUIDs.append(key)
+                            
+                            self.challengePoints.append(points)
+                            self.challengeDescriptions.append(someDescription)
+                            self.challengeObtainUnit.append(obtainUnit)
+                            self.challengeObtainValue.append(obtainValue)
+
+                            
+                            
+                        }
+                    }
+                }
+                
+                self.myTableView.reloadData()
+                
+            }
+            
+        })
+        
+    }
     
     
     func addListeners(){
@@ -93,6 +230,41 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    func toggleHistory(action: String, completion: @escaping (Bool) -> ()){
+        
+        var const: CGFloat = 0
+        
+        if action == "close" {
+            
+            let width = self.view.bounds.width
+            const = -width
+            
+            historyController?.history.removeAll()
+            historyController?.myTableView.reloadData()
+            
+            //clear history
+
+        } else {
+            
+            historyController?.loadHistory()
+            
+        }
+
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            self.historyContainerConstOutlet.constant = const
+            self.view.layoutIfNeeded()
+            
+        }) { (bool) in
+            
+            
+            completion(bool)
+            
+        }
+        
+    }
+
+    
     func toggleMenu(completion: @escaping (Bool) -> ()){
         
         var const: CGFloat = 0
@@ -124,8 +296,15 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     //Table View Delegates
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 10
-        
+        if currentBottomTab == "myRewards" {
+            
+            return rewardUIDs.count
+            
+        } else {
+            
+            return challengeUIDs.count
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -134,17 +313,33 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         
         if currentBottomTab == "myRewards" {
             
-            self.TableViewText.text = "Click on the reward you would like to redeem and follow the instructions in the presence of the store cashier."
+            
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "myRewards", for: indexPath) as! MyRewardsCell
+            
+            cell.partner = rewardPartners[indexPath.row]
+            cell.title = rewardDescriptions[indexPath.row]
+            cell.points = rewardPoints[indexPath.row]
+            
+            cell.partnerName.text = rewardPartners[indexPath.row]
+            cell.descriptionOutlet.text = rewardDescriptions[indexPath.row]
+            cell.rewardUID = rewardUIDs[indexPath.row]
+            
+            cell.mainrootcontroller = self
             
             return cell
             
         } else {
             
-            self.TableViewText.text = "Challenges are given out on a weekly basis and expire at the end of the week, so make sure to get them done in time!"
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "myChallenges", for: indexPath) as! MyRewardsCell
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "myChallenges", for: indexPath) as! MyChallengesTableViewCell
+            
+            cell.descriptionOutlet.text = challengeDescriptions[indexPath.row]
+
+            cell.pointsOutlet.text = challengePoints[indexPath.row].description
+            cell.obtainValueOutlet.text = challengeObtainValue[indexPath.row].description
+            cell.obtainUnitOutlet.text = " " + challengeObtainUnit[indexPath.row]
             
             return cell
             
@@ -162,10 +357,61 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
     }
+    
+    
+    func loadRewardsInfo(){
+
+        if let myUID = Auth.auth().currentUser?.uid {
+            
+            let ref = Database.database().reference().child("users").child(myUID).child("myrewards")
+            
+            ref.keepSynced(true)
+            
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let data = snapshot.value as? [String : Any] {
+                    
+                    self.rewardUIDs.removeAll()
+                    self.rewardPoints.removeAll()
+                    self.rewardDescriptions.removeAll()
+                    self.rewardPartners.removeAll()
+                    
+                    for (key,value) in data {
+                        
+                        if let dictvalue = value as? [String : Any] {
+                            
+                            if let someDescription = dictvalue["description"] as? String, let someName = dictvalue["name"] as? String, let somePoints = dictvalue["points"] as? Int {
+              
+                                self.rewardUIDs.append(key)
+                                self.rewardPoints.append(somePoints)
+                                self.rewardDescriptions.append(someDescription)
+                                self.rewardPartners.append(someName)
+                                
+                            }
+                        }
+                    }
+                    
+                    self.myTableView.reloadData()
+
+                } else {
+                    
+                    self.rewardUIDs.removeAll()
+                    self.rewardPoints.removeAll()
+                    self.rewardDescriptions.removeAll()
+                    self.rewardPartners.removeAll()
+                    
+                    self.myTableView.reloadData()
+                    
+                }
+            })
+        }
+    }
 
     
     
     @IBAction func profileSelect(_ sender: Any) {
+        
+        loadRewardsInfo()
         
         print(currentTab)
         
@@ -188,13 +434,14 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             self.currentTab = "profile"
             
         }
-
     }
     
     
     @IBAction func collectSelect(_ sender: Any) {
         
         print(currentTab)
+        
+        loadRewardsInfo()
         
         let screenWidth = self.view.bounds.width
         
@@ -224,17 +471,12 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             UIView.animate(withDuration: 0.3, animations: {
                 
                 self.RewardsXConstraint.constant = 0
-                self.rewardsController?.toggleAllPartners(direction: "close", completion: { (bool) in
+                self.rewardsController?.toggleSelectedStore(direction: "close", completion: { (bool) in
                     
                     print("all partners closed")
                     
                 })
-                
-                self.rewardsController?.allPartnersController?.toggleSelectedStore(action: "close", completion: { (bool) in
-                    
-                    print("selected store closed")
-                    
-                })
+
                 
                 self.profilePageOutlet.setImage(UIImage(named: "profileUnselected"), for: .normal)
                 self.collectPageOutlet.setImage(UIImage(named: "collectUnselected"), for: .normal)
@@ -254,6 +496,10 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         
         currentBottomTab = "myRewards"
         
+        self.TableViewText.text = "Click on the reward you would like to redeem and follow the instructions in the presence of the store cashier."
+        
+        self.comingSoonView.alpha = 0
+        
         UIView.animate(withDuration: 0.3, animations: {
             
             self.myRewardsView.backgroundColor = UIColor.white
@@ -265,7 +511,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             self.myChallengesOutlet.setTitleColor(UIColor.white, for: .normal)
             
          
-            
+            self.view.layoutIfNeeded()
             
         }) 
         
@@ -276,9 +522,19 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBAction func myChallenges(_ sender: Any) {
         
+        
+        
         currentBottomTab = "myChallenges"
         
+        self.TableViewText.text = "Challenges are given out on a weekly basis and expire at the end of the week, so make sure to get them done in time!"
+        
+        loadChallenges()
+        
+        self.comingSoonView.alpha = 1
+        
         UIView.animate(withDuration: 0.3, animations: {
+            
+            
             
             self.myRewardsView.backgroundColor = self.hexStringToUIColor(hex: "A29DCB")
             self.bottomMyRewards.backgroundColor = self.hexStringToUIColor(hex: "A29DCB")
@@ -288,14 +544,47 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             self.myRewardsOutlet.setTitleColor(UIColor.white, for: .normal)
             self.myChallengesOutlet.setTitleColor(UIColor.black, for: .normal)
             
+            self.view.layoutIfNeeded()
             
         })
-        
-        self.myTableView.reloadData()
     }
     
     //Location Manager Delegates
+    
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        checkIfInRange()
+        
+        let currentDate = NSDate().timeIntervalSince1970
+        
+        if let reference = self.collectController?.referenceDate, let collecting = self.collectController?.collecting {
+            
+            if collecting {
+                
+                if let pointsCollected = self.collectController?.pointsCollectedToday {
+                    
+                    if pointsCollected < 1000 {
+                        
+                        self.collectController?.dailyLimitOutlet.alpha = 0
+                        
+                        if currentDate-reference > 7.2 {
+                            
+                            self.collectController?.referenceDate = Date().timeIntervalSince1970
+                            self.collectController?.updateLifePoints()
+                            
+                        }
+                        
+                    } else {
+                        
+                        self.collectController?.dailyLimitOutlet.alpha = 1
+                        
+                    }
+                }
+            }
+        }
+
         
         if let lastLocation = locations.last {
             
@@ -312,50 +601,47 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //Functions
-    func beginCheckingInRange(){
-        
-        self.locUpdatetimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(checkIfInRange), userInfo: nil, repeats: true)
-
-    }
-    
-    
     func checkIfInRange(){
         
         if let uid = Auth.auth().currentUser?.uid {
 
-            let latRef = Database.database().reference().child("users").child(uid).child("myGymLatitude")
+            let ref = Database.database().reference().child("users").child(uid)
             
-            latRef.observe(.value, with: { (latitudeSnapshot) in
+            ref.keepSynced(true)
+            
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                let longRef = Database.database().reference().child("users").child(uid).child("myGymLongitude")
-                longRef.keepSynced(true)
-                
-                longRef.observeSingleEvent(of: .value, with: { (longitudeSnapshot) in
+                if let data = snapshot.value as? [AnyHashable:Any] {
                     
-                    if let gymLatitude = latitudeSnapshot.value as? CLLocationDegrees, let gymLongitude = longitudeSnapshot.value as? CLLocationDegrees {
+                    if let gymLatitude = data["myGymLatitude"] as? CLLocationDegrees, let gymLongitude = data["myGymLongitude"] as? CLLocationDegrees {
                         
                         let gymCoordinate = CLLocation(latitude: gymLatitude, longitude: gymLongitude)
                         
-                        let distance = self.globLocation.distance(from: gymCoordinate)
+                        guard let myLocation = self.globLocation else {return}
                         
+                        let distance = myLocation.distance(from: gymCoordinate)
                         
-                        if distance < 200 {
-
+                        if distance < 50 {
+                            
                             self.collectController?.collectButtonOutlet.isEnabled = true
                             self.collectController?.inRangeImage.image = UIImage(named: "inRange")
                             
-
+                            
                         } else {
-
+                            
                             self.collectController?.collectButtonOutlet.isEnabled = false
                             self.collectController?.lpCollectNumberView.alpha = 0
                             self.collectController?.collectButtonOutlet.alpha = 1
                             self.collectController?.inRangeImage.image = UIImage(named: "outOfRange")
-                            self.collectController?.beginCollectingTimer.invalidate()
-
+                            
+                            self.collectController?.dailyLimitOutlet.alpha = 0
+                            
+                            self.collectController?.collecting = false
+                            
                         }
                     }
-                })
+
+                }
             })
         }
     }
@@ -447,7 +733,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             
         } else if status == CLAuthorizationStatus.notDetermined {
             
-            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.requestAlwaysAuthorization()
             
         } else {
             
@@ -464,27 +750,155 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
     }
+    
+
+    
+    
+    func redemptionSlider(recognizer: UIPanGestureRecognizer){
+        
+        let translation = recognizer.translation(in: self.view).x
+        
+        
+        
+        if translation > 0 && translation < redemptionSliderWidthOutlet.bounds.width {
+            
+            redemptionSliderConstOutlet.constant = translation
+            
+        }
+        
+        
+        
+        switch recognizer.state {
+            
+        case .began:
+            print("began")
+            
+        case .ended:
+            print("ended")
+            
+            if recognizer.velocity(in: self.view).x > 750 {
+                
+                if let uid = Auth.auth().currentUser?.uid {
+                    
+                    let ref = Database.database().reference().child("users").child(uid)
+                    
+                    let date = NSDate().timeIntervalSince1970
+                    
+                    var rewardHistory = [String:Any]()
+                    
+                    rewardHistory["date"] = date
+                    rewardHistory["title"] = rewardTitleToRedeem
+                    rewardHistory["points"] = rewardPointsToRedeem
+                    rewardHistory["partner"] = rewardPartnerToRedeem
+                    
+                    ref.child("myrewards").child(rewardUIDtoRedeem).removeValue()
+                    
+                    ref.child("rewardsHistory").childByAutoId().setValue(rewardHistory)
+                    
+                    self.loadRewardsInfo()
+                    
+                }
+
+                
+                UIView.animate(withDuration: 0.3, animations: {
+                    
+                    self.redemptionSliderConstOutlet.constant = self.redemptionSliderWidthOutlet.bounds.width-50
+                    self.view.layoutIfNeeded()
+                    
+                }, completion: { (bool) in
+                    
+                    print("back to normal")
+                    
+                    UIView.animate(withDuration: 0.3, animations: {
+                        
+                        self.redeemViewOutlet.alpha = 0
+                        self.blurViewOutletj.alpha = 0
+                        self.view.layoutIfNeeded()
+                        
+                    }, completion: { (bool) in
+                        
+                        print("")
+                        
+                    })
+                    
+                    
+                })
+
+                
+            } else {
+                
+                UIView.animate(withDuration: 0.3, animations: {
+                    
+                    self.redemptionSliderConstOutlet.constant = 2
+                    self.view.layoutIfNeeded()
+                    
+                }, completion: { (bool) in
+                    
+                    print("back to normal")
+                    
+                })
+                
+            }
+            
+            
+        case .changed:
+            print("changed")
+            
+        default:
+            break
+            
+            
+        }
+        
+        
+        print(translation)
+        print(recognizer.velocity(in: self.view).x)
+        
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(true)
+        self.gymSelectConst.constant = self.view.bounds.height
+        
+        
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let uid = Auth.auth().currentUser?.uid {
-            
-            let ref = Database.database().reference().child("users").child(uid)
-            ref.child("myGymLongitude").setValue(0)
-            ref.child("myGymLatitude").setValue(0)
-            
-        }
+        self.locationManager.delegate = self
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.startUpdatingLocation()
+        
+        self.partnerDescriptionOutlet.adjustsFontSizeToFitWidth = true
+        self.redemptionDescriptionOutlet.adjustsFontSizeToFitWidth = true
+        
+        redemptionView.layer.cornerRadius = 20
+        
+        loadRewardsInfo()
         
         requestWhenInUseAuthorization()
-        beginCheckingInRange()
+        
         checkIfInRange()
+        //checkIfInRange()
+        googleSelectGym.alpha = 1
+        
+        let sliderPanGesture = UIPanGestureRecognizer(target: self, action: #selector(redemptionSlider))
+        sliderPanGesture.delegate = self
+        redemptionSliderViewOutlet.addGestureRecognizer(sliderPanGesture)
+        redemptionSliderViewOutlet.addGestureRecognizer(sliderPanGesture)
+
         
         addCloseMenu()
         addListeners()
 
         let width = self.view.bounds.width
         self.RewardsXConstraint.constant = width
+        self.historyContainerConstOutlet.constant = -width
         
         self.myRewardsView.layer.cornerRadius = 10
         self.myChallengesView.layer.cornerRadius = 10
@@ -523,9 +937,6 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         return .lightContent
     }
 
-    
-
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -551,6 +962,25 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             let collect = segue.destination as? CollectViewController
             collectController = collect
             collectController?.mainRootController = self
+            
+        } else if segue.identifier == "historySegue" {
+            
+            let history = segue.destination as? HistoryViewController
+            historyController = history
+            historyController?.mainRootController = self
+
+        } else if segue.identifier == "mainGymSegue" {
+            
+            let nav = segue.destination as? UINavigationController
+            let vc = nav?.viewControllers.first as? MainGoogleGymViewController
+            googleGymController = vc
+            googleGymController?.mainRootController = self
+ 
+        } else if segue.identifier == "profileSegue" {
+            
+            let profile = segue.destination as? ProfileViewController
+            profileController = profile
+            profileController?.rootController = self
             
         }
     }
