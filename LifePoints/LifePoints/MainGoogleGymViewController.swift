@@ -186,6 +186,8 @@ class MainGoogleGymViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func Cancel(_ sender: Any) {
         
+        self.view.endEditing(true)
+        
         mainRootController?.toggleMainGym()
         
     }

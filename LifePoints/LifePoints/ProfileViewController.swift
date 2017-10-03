@@ -129,7 +129,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             
-            self.dismiss(animated: true, completion: nil)
+            
             
         }))
         

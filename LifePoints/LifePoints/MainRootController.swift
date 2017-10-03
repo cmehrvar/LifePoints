@@ -467,6 +467,8 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func rewardsSelect(_ sender: Any) {
         
         print(currentTab)
+        
+        rewardsController?.loadImages()
 
             UIView.animate(withDuration: 0.3, animations: {
                 
@@ -862,6 +864,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         
         super.viewDidAppear(true)
         self.gymSelectConst.constant = self.view.bounds.height
+        googleSelectGym.alpha = 1
         
         
     }
@@ -884,8 +887,6 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
         requestWhenInUseAuthorization()
         
         checkIfInRange()
-        //checkIfInRange()
-        googleSelectGym.alpha = 1
         
         let sliderPanGesture = UIPanGestureRecognizer(target: self, action: #selector(redemptionSlider))
         sliderPanGesture.delegate = self

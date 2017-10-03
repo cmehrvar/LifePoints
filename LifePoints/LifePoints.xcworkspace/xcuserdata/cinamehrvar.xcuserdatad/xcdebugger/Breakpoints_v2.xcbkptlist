@@ -26,11 +26,11 @@
                   moduleName = "LifePoints"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cinamehrvar/Desktop/LifePoints/LifePoints/LifePoints/LogInController.swift"
-                  timestampString = "528503666.547825"
+                  timestampString = "528680313.747523"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "339"
-                  endingLineNumber = "339"
+                  startingLineNumber = "341"
+                  endingLineNumber = "341"
                   offsetFromSymbolStart = "4496">
                </Location>
                <Location
@@ -41,11 +41,11 @@
                   moduleName = "LifePoints"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cinamehrvar/Desktop/LifePoints/LifePoints/LifePoints/LogInController.swift"
-                  timestampString = "528503666.549122"
+                  timestampString = "528680313.749286"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "341"
-                  endingLineNumber = "341"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
                   offsetFromSymbolStart = "48">
                </Location>
             </Locations>
@@ -74,12 +74,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LifePoints/MainRootController.swift"
-            timestampString = "528504636.212904"
+            timestampString = "528677625.567484"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "761"
-            endingLineNumber = "761"
+            startingLineNumber = "763"
+            endingLineNumber = "763"
             landmarkName = "redemptionSlider(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LifePoints/RewardsViewController.swift"
+            timestampString = "528680414.947704"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "slideFromRightToLeft()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

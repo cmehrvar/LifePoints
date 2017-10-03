@@ -22,8 +22,10 @@ class GoogleGymViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     @IBAction func cancel(_ sender: Any) {
         
-        thirdSignUpController?.toggleSelectGym()
         self.view.endEditing(true)
+        
+        thirdSignUpController?.toggleSelectGym()
+        
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
