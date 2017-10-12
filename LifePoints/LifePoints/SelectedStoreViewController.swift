@@ -51,10 +51,13 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
     
     var website = ""
     
+    var rewards = [[AnyHashable:Any]]()
+    
+    /*
     var rewardUIDs = [String]()
     var rewardPoints = [Int]()
     var rewardDescriptions = [String]()
-    
+    */
     
     func loadInfo(){
         
@@ -94,10 +97,19 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.mondayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
                                     
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.mondayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
                                 }
-                                
                             }
                             
     
@@ -111,7 +123,19 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.tuesdayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.tuesdayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
+
                                     
                                 }
                                 
@@ -129,7 +153,19 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.wednesdayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.wednesdayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
+
                                     
                                 }
                                 
@@ -147,7 +183,18 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.thursdayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.thursdayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
                                     
                                 }
                                 
@@ -163,7 +210,18 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.fridayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.fridayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
                                     
                                 }
                                 
@@ -180,7 +238,19 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.saturdayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.saturdayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
+
                                     
                                 }
                                 
@@ -197,8 +267,18 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                                     
                                 } else {
                                     
-                                    self.sundayTime = from + " to " + to
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "HH:mm"
                                     
+                                    if let fromDate = dateFormatter.date(from: from), let toDate = dateFormatter.date(from: to) {
+                                        
+                                        dateFormatter.dateFormat = "h:mm a"
+                                        let fromDateString = dateFormatter.string(from: fromDate)
+                                        let toDateString = dateFormatter.string(from: toDate)
+                                        
+                                        self.sundayTime = fromDateString + " to " + toDateString
+                                        
+                                    }
                                 }
                             }
                             
@@ -229,7 +309,7 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                     
                 }
                 
-                if let bio = data["bio"] as? String {
+                if let bio = data["Bio"] as? String {
                     
                     self.bio = bio
                     
@@ -249,24 +329,39 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
                             
                             print(dictValue)
                             
-                            if let description = dictValue["RewardDescription"] as? String, let LPValue = dictValue["LPValue"] as? String {
-                                
-                                self.rewardUIDs.append(key)
-                                self.rewardDescriptions.append(description)
+                            if let descriptionLP = dictValue["RewardDescription"] as? String, let LPValue = dictValue["LPValue"] as? String {
+  
                                 
                                 if let intPoints = Int(LPValue) {
                                     
-                                    self.rewardPoints.append(intPoints)
+                                    self.rewards.append(["description":descriptionLP, "LPValue" : LPValue, "uid" : key, "points" : intPoints])
+
                                     
                                 }
                             }
                         }
                     }
+                    
+                    self.rewards.sort(by: { (a, b) -> Bool in
+                        
+                        if let aValue = a["points"] as? Int, let bValue = b["points"] as? Int {
+                            
+                            if aValue > bValue {
+                                
+                                return false
+                                
+                            } else {
+                                
+                                return true
+                                
+                            }
+                        } else {
+                            
+                            return false
+                            
+                        }
+                    })
                 }
-
-                print(self.rewardUIDs)
-                print(self.rewardDescriptions)
-                print(self.rewardPoints)
                 
                 self.myTableView.reloadData()
                 
@@ -328,10 +423,8 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func back(_ sender: Any) {
         
-        rewardUIDs.removeAll()
-        rewardDescriptions.removeAll()
-        rewardPoints.removeAll()
-        
+        rewards.removeAll()
+
         myTableView.reloadData()
         
         rewardsViewController?.toggleSelectedStore(direction: "close", completion: { (bool) in
@@ -353,15 +446,29 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
             let rewardCell = tableView.dequeueReusableCell(withIdentifier: "reward", for: indexPath) as! StoreRewardTableViewCell
             
             rewardCell.selectedStoreController = self
+   
             
-            rewardCell.pointsOutlet.text = String(rewardPoints[indexPath.row])
-            rewardCell.descriptionOutlet.text = rewardDescriptions[indexPath.row]
+            if let descriptionLP = rewards[indexPath.row]["description"] as? String {
+                
+                rewardCell.descriptionOutlet.text = descriptionLP
+                rewardCell.someDescription = descriptionLP
+                
+            }
             
-            rewardCell.rewardUID = rewardUIDs[indexPath.row]
+            if let points = rewards[indexPath.row]["points"] as? Int {
+                
+                rewardCell.pointsOutlet.text = String(points)
+                rewardCell.points = points
+                
+            }
+
+            if let uid = rewards[indexPath.row]["uid"] as? String {
+                
+                rewardCell.rewardUID = uid
+                
+            }
             
-            rewardCell.points = rewardPoints[indexPath.row]
-            rewardCell.someDescription = rewardDescriptions[indexPath.row]
-            
+
             rewardCell.storeName = storeName
             
             return rewardCell
@@ -404,7 +511,7 @@ class SelectedStoreViewController: UIViewController, UITableViewDataSource, UITa
         
         if currentTab == "Rewards" {
             
-            return rewardUIDs.count
+            return rewards.count
             
         } else {
             

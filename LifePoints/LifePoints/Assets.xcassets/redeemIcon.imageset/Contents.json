@@ -6,11 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon (redeeming reward ball).png",
+      "filename" : "Redeem Circle (140px).png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Redeem Circle (210px).png",
       "scale" : "3x"
     }
   ],

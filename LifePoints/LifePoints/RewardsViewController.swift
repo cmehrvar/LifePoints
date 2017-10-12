@@ -201,9 +201,8 @@ class RewardsViewController: UIViewController, UICollectionViewDataSource, UICol
                 
             }, completion: { (bool) in
                 
-                self.selectedStoreController?.rewardUIDs.removeAll()
-                self.selectedStoreController?.rewardDescriptions.removeAll()
-                self.selectedStoreController?.rewardPoints.removeAll()
+                self.selectedStoreController?.rewards.removeAll()
+
                 self.selectedStoreController?.myTableView.reloadData()
 
                 
