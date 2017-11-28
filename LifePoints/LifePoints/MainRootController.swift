@@ -17,6 +17,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     var globLocation: CLLocation!
     
     var locUpdatetimer = Timer()
+    var Sec60Wait = Timer()
     var checkRangeTimer = Timer()
     
     
@@ -552,9 +553,6 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //Location Manager Delegates
-    
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         checkIfInRange()
@@ -598,7 +596,6 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                 updateLocationToFirebase()
                 
             }
-            
         }
     }
     
@@ -628,6 +625,8 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                             self.collectController?.collectButtonOutlet.isEnabled = true
                             self.collectController?.inRangeImage.image = UIImage(named: "inRange")
                             
+                            self.hasItBeen60 = false
+                            self.hasStarted60Timer = false
                             
                         } else {
                             
@@ -638,17 +637,39 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                             
                             self.collectController?.dailyLimitOutlet.alpha = 0
                             
-                            self.collectController?.collecting = false
+                            guard let collecting = self.collectController?.collecting else {return}
                             
+                            if collecting {
+                                
+                                if !self.hasStarted60Timer {
+                                    
+                                    self.Sec60Wait = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.wait60Seconds), userInfo: nil, repeats: true)
+                                    
+                                }
+                                
+                                if self.hasItBeen60 {
+                                    
+                                    self.collectController?.collecting = false
+                                    
+                                }
+                            }
                         }
                     }
-
                 }
             })
         }
     }
     
-
+    var hasItBeen60 = false
+    var hasStarted60Timer = false
+    
+    func wait60Seconds(){
+        
+        hasItBeen60 = true
+        self.Sec60Wait.invalidate()
+        
+    }
+    
     func updateLocationToFirebase(){
         
         guard let scopeLocation = globLocation else {return}
@@ -694,6 +715,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+    
     
     
     func updateLocation(){
@@ -746,7 +768,7 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
+        if status == .authorizedAlways {
             
             updateLocation()
             
@@ -822,11 +844,8 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                         print("")
                         
                     })
-                    
-                    
                 })
 
-                
             } else {
                 
                 UIView.animate(withDuration: 0.3, animations: {
@@ -842,22 +861,17 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
                 
             }
             
-            
         case .changed:
             print("changed")
             
         default:
             break
-            
-            
+    
         }
-        
-        
+    
         print(translation)
         print(recognizer.velocity(in: self.view).x)
-        
-        
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -872,6 +886,8 @@ class MainRootController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.menuContainerLeading.constant = -self.view.bounds.width
         
         self.locationManager.delegate = self
         self.locationManager.allowsBackgroundLocationUpdates = true

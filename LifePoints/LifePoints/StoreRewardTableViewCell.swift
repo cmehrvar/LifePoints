@@ -95,14 +95,9 @@ class StoreRewardTableViewCell: UITableViewCell {
                                 ref.child("points").setValue(myPoints-self.points)
                                 
                             }
-                            
-                            
-                            
+
                             self.selectedStoreController?.dismiss(animated: true, completion: nil)
-                            
-                            
-                            //Add to my rewards
-                            
+
                             
                         }))
 
@@ -110,20 +105,14 @@ class StoreRewardTableViewCell: UITableViewCell {
                     } else {
                         
                         alertController.title = "Not Enough Points"
-                        
-                        
-                        
-                        
-                        alertController.message = "Sorry, you do not have enough LifePoints to reedeem this item at this time. Go to the gym!"
+                
+                        alertController.message = "Sorry, you do not have enough LifePoints to redeem this item at this time. Go to the gym!"
                         
                         
                     }
-                    
-                    
-                    
+
                     self.selectedStoreController?.present(alertController, animated: true, completion: nil)
-                    
-                    
+
                 }
                 
                 

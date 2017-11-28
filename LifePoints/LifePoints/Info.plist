@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.21</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.3</string>
+	<string>1.131</string>
 	<key>FacebookAppID</key>
 	<string>417046975348528</string>
 	<key>FacebookDisplayName</key>
@@ -42,7 +42,9 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow access to your camera to take a profile picture</string>
-	<key>NSLocationAlwaysUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please share your location to begin collecting points!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please share your location to begin collecting points!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow access to your gallery to select a profile picture</string>

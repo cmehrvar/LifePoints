@@ -29,8 +29,7 @@ class CollectViewController: UIViewController {
     var referenceDate = NSDate().timeIntervalSince1970
     
     @IBAction func collectButton(_ sender: Any) {
-        
-        
+
         if let uid = Auth.auth().currentUser?.uid {
             
             let ref = Database.database().reference().child("users").child(uid)
@@ -52,8 +51,7 @@ class CollectViewController: UIViewController {
                             
                             ref.child("startCollectTime").setValue(NSDate().timeIntervalSince1970)
                             ref.child("pointsCollectedToday").setValue(0)
-                            
-                            
+
                         }
                     }
                 }
@@ -61,13 +59,11 @@ class CollectViewController: UIViewController {
                 self.lpCollectNumberView.alpha = 1
                 self.collectButtonOutlet.alpha = 0
     
-                
                 self.collecting = true
                 self.referenceDate = NSDate().timeIntervalSince1970
                 
             })
         }
-        
     }
     
     
@@ -89,8 +85,7 @@ class CollectViewController: UIViewController {
                     if self.pointsCollectedToday == 1000 {
                         
                         self.dailyLimitOutlet.alpha = 1
-                        
-                        
+           
                     }
                     
                     Database.database().reference().child("users").child(uid).child("pointsCollectedToday").setValue(self.pointsCollectedToday)
@@ -125,8 +120,6 @@ class CollectViewController: UIViewController {
                 }
             })
         }
-        
-        
 
         // Do any additional setup after loading the view.
     }

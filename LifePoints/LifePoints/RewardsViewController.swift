@@ -371,6 +371,9 @@ class RewardsViewController: UIViewController, UICollectionViewDataSource, UICol
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.LtoRcenterConst.constant = -self.view.bounds.width
+        self.RtoLcenterConst.constant = self.view.bounds.width
 
 
         let leftPromoSwipe = UISwipeGestureRecognizer(target: self, action: #selector(slideFromRightToLeft))
